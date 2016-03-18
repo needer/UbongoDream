@@ -2,14 +2,10 @@ package com.example.UbonGo;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
-import android.graphics.Point;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.Display;
 
 import com.example.UbonGo.controller.MenuController;
-import com.example.UbonGo.serverManager.ServerManager;
-import com.example.UbonGo.view.MainMenuView;
 
 import sheep.game.Game;
 import sheep.game.State;
@@ -27,8 +23,8 @@ public class Main extends Activity {
         DisplayMetrics dm = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(dm);
 
-        Constants.HEIGHT = dm.heightPixels;
-        Constants.WIDTH  = dm.widthPixels;
+        DisplayElements.getInstance().setHeight(dm.heightPixels);
+        DisplayElements.getInstance().setWidth(dm.widthPixels);
 
         game = new Game(this, null);
         // Push the main state.
