@@ -59,8 +59,17 @@ public class DisplayElements {
 
     }
 
+    //The back-button will always be placed on the same side, it can therefore be generalized with this method.
     public PictureButton getBackButton(){
         return new PictureButton(R.drawable.back_button,getWidth()*0.05f,getHeight()*0.7f);
+    }
+
+    public PictureButton getPlussButton(float x, float y){
+        return new PictureButton(R.drawable.pluss_button,x,y);
+    }
+
+    public PictureButton getMinusButton(float x, float y){
+        return new PictureButton(R.drawable.minus_button,x,y);
     }
 
 }

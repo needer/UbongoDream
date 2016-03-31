@@ -19,8 +19,8 @@ public class OptionsView implements View, WidgetListener {
     private MenuController controller;
     private Image background;
     private PictureButton btnBackToMain;
-    private TextButton btnVolumeDown;
-    private TextButton btnVolumeUp;
+    private PictureButton btnVolumeDown;
+    private PictureButton btnVolumeUp;
     private String volume;
 
 
@@ -36,12 +36,12 @@ public class OptionsView implements View, WidgetListener {
         btnBackToMain.addWidgetListener(this);
 
         //Volume down-button
-        btnVolumeDown=new TextButton(DisplayElements.getInstance().getWidth()*0.1f, DisplayElements.getInstance().getHeight()*0.5f, "-", DisplayElements.getInstance().getButtonFont(DisplayElements.getInstance().getHeight()));
+        btnVolumeDown=DisplayElements.getInstance().getMinusButton(DisplayElements.getInstance().getWidth()*0.1f,DisplayElements.getInstance().getHeight()*0.4f);
         controller.addTouchListener(btnVolumeDown);
         btnVolumeDown.addWidgetListener(this);
 
         //Volume up-button
-        btnVolumeUp=new TextButton(DisplayElements.getInstance().getWidth()*0.3f, DisplayElements.getInstance().getHeight()*0.5f, "+", DisplayElements.getInstance().getButtonFont(DisplayElements.getInstance().getHeight()));
+        btnVolumeUp=DisplayElements.getInstance().getPlussButton(DisplayElements.getInstance().getWidth()*0.3f, DisplayElements.getInstance().getHeight()*0.4f);
         controller.addTouchListener(btnVolumeUp);
         btnVolumeUp.addWidgetListener(this);
 
