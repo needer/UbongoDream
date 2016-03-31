@@ -1,9 +1,11 @@
 package com.example.UbonGo;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.inputmethod.InputMethodManager;
 
 import com.example.UbonGo.controller.MenuController;
 
@@ -31,6 +33,7 @@ public class Main extends Activity {
         game.pushState(new MenuController(this)); //This displays the main menu when the game is opened.
         // View the game.
         setContentView(game);
+
     }
 
     /**
@@ -40,7 +43,10 @@ public class Main extends Activity {
 public void changeMainController(State controller){
     game.pushState(controller);
 }
-
+public void openKeyboard(){
+    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+}
 
 }
 

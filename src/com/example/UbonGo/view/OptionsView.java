@@ -30,7 +30,6 @@ public class OptionsView implements View, WidgetListener {
         background=new Image(R.drawable.ubongo_background_color);
 
         //Back-button
-        //btnBackToMain=new TextButton(DisplayElements.getInstance().getWidth()*0.01f, DisplayElements.getInstance().getHeight()*0.85f, "back", DisplayElements.getInstance().getButtonFont(DisplayElements.getInstance().getHeight()));
         btnBackToMain=DisplayElements.getInstance().getBackButton();
         controller.addTouchListener(btnBackToMain);
         btnBackToMain.addWidgetListener(this);

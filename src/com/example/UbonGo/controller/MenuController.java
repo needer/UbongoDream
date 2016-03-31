@@ -45,7 +45,7 @@ public class MenuController extends State{
 
     public void btnOptionsClicked(){
         this.view=new OptionsView(this);
-        ((OptionsView) view).changeVolumeText("50");
+        ((OptionsView) view).changeVolumeText(model.getVolume()+"");
     }
 
     public void btnBackToMainClicked(){
@@ -75,6 +75,7 @@ public class MenuController extends State{
     public float getVolume(){
         return model.getVolume();
     }
+
 
 
 
