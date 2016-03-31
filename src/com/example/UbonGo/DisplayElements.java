@@ -3,6 +3,8 @@ package com.example.UbonGo;
 import android.graphics.Paint;
 import android.graphics.Typeface;
 
+import com.example.UbonGo.view.PictureButton;
+
 import sheep.graphics.Font;
 
 /**
@@ -55,6 +57,10 @@ public class DisplayElements {
         Paint font= new Font(255, 255, 255, screenHeight*0.07F, Typeface.SANS_SERIF, 1);
         return font;
 
+    }
+
+    public PictureButton getBackButton(){
+        return new PictureButton(R.drawable.back_button,getWidth()*0.05f,getHeight()*0.7f);
     }
 
 }

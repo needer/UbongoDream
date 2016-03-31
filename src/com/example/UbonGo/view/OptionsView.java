@@ -1,13 +1,11 @@
 package com.example.UbonGo.view;
 
 import android.graphics.Canvas;
-import android.graphics.Typeface;
 
 import com.example.UbonGo.DisplayElements;
 import com.example.UbonGo.R;
 import com.example.UbonGo.controller.MenuController;
 
-import sheep.graphics.Font;
 import sheep.graphics.Image;
 import sheep.gui.TextButton;
 import sheep.gui.WidgetAction;
@@ -20,7 +18,7 @@ public class OptionsView implements View, WidgetListener {
 
     private MenuController controller;
     private Image background;
-    private TextButton btnBackToMain;
+    private PictureButton btnBackToMain;
     private TextButton btnVolumeDown;
     private TextButton btnVolumeUp;
     private String volume;
@@ -32,7 +30,8 @@ public class OptionsView implements View, WidgetListener {
         background=new Image(R.drawable.ubongo_background_color);
 
         //Back-button
-        btnBackToMain=new TextButton(DisplayElements.getInstance().getWidth()*0.01f, DisplayElements.getInstance().getHeight()*0.85f, "back", DisplayElements.getInstance().getButtonFont(DisplayElements.getInstance().getHeight()));
+        //btnBackToMain=new TextButton(DisplayElements.getInstance().getWidth()*0.01f, DisplayElements.getInstance().getHeight()*0.85f, "back", DisplayElements.getInstance().getButtonFont(DisplayElements.getInstance().getHeight()));
+        btnBackToMain=DisplayElements.getInstance().getBackButton();
         controller.addTouchListener(btnBackToMain);
         btnBackToMain.addWidgetListener(this);
 
