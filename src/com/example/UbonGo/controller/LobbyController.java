@@ -53,7 +53,8 @@ public class LobbyController extends State implements KeyboardListener {
     }
     public boolean onKeyUp(KeyEvent event){
         char pressedKey = (char) event.getUnicodeChar();
-        System.out.println(pressedKey);
+        StartLobbyView v=(StartLobbyView) view;
+        v.setPlayerNameText(v.getPlayerNameText()+pressedKey+"|");
         return false;
     }
 }
