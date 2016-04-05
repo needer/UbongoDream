@@ -23,8 +23,8 @@ public class MainMenuView implements WidgetListener, View{
 
     public MainMenuView(MenuController controller){
         this.controller=controller;
-        background=new Image(R.drawable.ubongo_background_color);
-        backgroundLogo=new Image(R.drawable.ubongo_background_text);
+        background=DisplayElements.getInstance().getBackground();
+        backgroundLogo=DisplayElements.getInstance().getGameLogo();
 
 
         //Start Game-button

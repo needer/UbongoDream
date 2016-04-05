@@ -6,6 +6,7 @@ import android.graphics.Typeface;
 import com.example.UbonGo.view.PictureButton;
 
 import sheep.graphics.Font;
+import sheep.graphics.Image;
 
 /**
  * Created by Sindre on 17.03.2016.
@@ -25,7 +26,6 @@ public class DisplayElements {
 
     //The screen height, set in main inCreate
     private int height;
-
 
 
     public int getWidth(){
@@ -70,6 +70,14 @@ public class DisplayElements {
 
     public PictureButton getMinusButton(float x, float y){
         return new PictureButton(R.drawable.minus_button,x,y);
+    }
+
+    public Image getBackground(){
+       return new Image(R.drawable.ubongo_background_color);
+    }
+
+    public Image getGameLogo(){
+        return new Image(R.drawable.ubongo_background_text);
     }
 
 }

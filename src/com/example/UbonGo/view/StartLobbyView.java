@@ -25,17 +25,14 @@ public class StartLobbyView implements View, WidgetListener {
     private EditText txtPlayerName;
     private PictureButton btnStartNewLobby;
     private android.view.View playerNameLayout;
-    private android.view.View pinLayout;
     private EditText txtPin;
     private PictureButton btnStartExistingLobby;
-    private String startLobby="Start a new lobby:";
-    private String joinLobby="Join existing lobby:";
-    private String playerName="Player name:";
+    private String playerName;
 
 
     public StartLobbyView(LobbyController controller){
         this.controller=controller;
-        background=new Image(R.drawable.ubongo_background_color);
+        background=DisplayElements.getInstance().getBackground();
 
         //Back-button
         btnBack = DisplayElements.getInstance().getBackButton();
@@ -86,22 +83,27 @@ public class StartLobbyView implements View, WidgetListener {
         btnBack.draw(canvas);
         btnStartNewLobby.draw(canvas);
         btnStartExistingLobby.draw(canvas);
-        canvas.drawText(playerName, DisplayElements.getInstance().getWidth() * 0.1f, DisplayElements.getInstance().getHeight() * 0.15f, DisplayElements.getInstance().getTextFont(DisplayElements.getInstance().getHeight()));
-        canvas.drawText(startLobby, DisplayElements.getInstance().getWidth() * 0.1f, DisplayElements.getInstance().getHeight() * 0.4f, DisplayElements.getInstance().getTextFont(DisplayElements.getInstance().getHeight()));
-        canvas.drawText(joinLobby, DisplayElements.getInstance().getWidth()*0.1f, DisplayElements.getInstance().getHeight()*0.6f,DisplayElements.getInstance().getTextFont(DisplayElements.getInstance().getHeight()));
+        canvas.drawText("Player name:", DisplayElements.getInstance().getWidth() * 0.1f, DisplayElements.getInstance().getHeight() * 0.15f, DisplayElements.getInstance().getTextFont(DisplayElements.getInstance().getHeight()));
+        canvas.drawText("Start a new lobby:", DisplayElements.getInstance().getWidth() * 0.1f, DisplayElements.getInstance().getHeight() * 0.4f, DisplayElements.getInstance().getTextFont(DisplayElements.getInstance().getHeight()));
+        canvas.drawText("Join existing lobby:", DisplayElements.getInstance().getWidth()*0.1f, DisplayElements.getInstance().getHeight()*0.6f,DisplayElements.getInstance().getTextFont(DisplayElements.getInstance().getHeight()));
+    }
+
+    public void removeTextFields(){
+        ((ViewGroup) playerNameLayout.getParent()).removeView(playerNameLayout); //This line removes the EditText
     }
 
     public void actionPerformed(WidgetAction action){
         if(action.getSource() == btnBack){
             controller.btnBackClicked();
-            ((ViewGroup) playerNameLayout.getParent()).removeView(playerNameLayout); //This line removes the EditText
+
         }
         else if(action.getSource()== btnStartNewLobby){
-            controller.btnStartNewLobbyClicked();
+            controller.btnStartNewLobbyClicked(txtPlayerName.getText()+"");
 
         }
         else if(action.getSource()==btnStartExistingLobby){
-            controller.btnStartExistingLobbyClicked();
+            controller.btnStartExistingLobbyClicked(txtPlayerName.getText()+"",txtPin.getText()+"");
+
         }
     }
 
