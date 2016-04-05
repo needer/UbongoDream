@@ -1,6 +1,7 @@
 package com.example.UbonGo.view;
 
 import android.graphics.Canvas;
+import android.text.InputType;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -61,12 +62,13 @@ public class StartLobbyView implements View, WidgetListener {
         txtPlayerName.setVisibility(android.view.View.VISIBLE);
         txtPlayerName.setHint("name");
         txtPlayerName.setX(DisplayElements.getInstance().getWidth() * 0.45f);
-        txtPlayerName.setY(DisplayElements.getInstance().getHeight()*0.05f);
+        txtPlayerName.setY(DisplayElements.getInstance().getHeight() * 0.05f);
         ((LinearLayout) playerNameLayout).addView(txtPlayerName);
 
         //Input-field for PIN
         txtPin = new EditText(controller.getMain());
         txtPin.setWidth(Math.round(DisplayElements.getInstance().getWidth()*0.15f));
+        txtPin.setInputType(InputType.TYPE_CLASS_NUMBER);
         txtPin.setVisibility(android.view.View.VISIBLE);
         txtPin.setHint("PIN");
         txtPin.setX(txtPlayerName.getX() - DisplayElements.getInstance().getWidth() * 0.4f);
