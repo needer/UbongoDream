@@ -43,18 +43,16 @@ public class LobbyController extends State implements KeyboardListener {
 
     }
 
-    public void btnTestClicked(){
-        System.out.println("wdesfdhbjsaksODJHVBNM");
-        main.openKeyboard();
+    public void btnStartNewLobbyClicked(){
+
+    }
+
+    public void btnStartExistingLobbyClicked(){
+
     }
 
     public Main getMain(){
         return main;
     }
-    public boolean onKeyUp(KeyEvent event){
-        char pressedKey = (char) event.getUnicodeChar();
-        StartLobbyView v=(StartLobbyView) view;
-        v.setPlayerNameText(v.getPlayerNameText()+pressedKey+"|");
-        return false;
-    }
+
 }
