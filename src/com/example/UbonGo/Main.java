@@ -9,6 +9,7 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.example.UbonGo.controller.MenuController;
 
+import sheep.audio.Sound;
 import sheep.game.Game;
 import sheep.game.State;
 
@@ -17,6 +18,7 @@ public class Main extends Activity {
      * Called when the activity is first created.
      */
     private Game game;
+    Sound music;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,25 +30,27 @@ public class Main extends Activity {
         DisplayElements.getInstance().setHeight(dm.heightPixels);
         DisplayElements.getInstance().setWidth(dm.widthPixels);
 
+
         game = new Game(this, null);
         // Push the main state.
         game.pushState(new MenuController(this)); //This displays the main menu when the game is opened.
         // View the game.
         setContentView(game);
-
+        music = new Sound(R.raw.testes);
+        music.play(-1);
     }
 
     /**
      * Called when you want to change the state, for instance when you want too go from main menu to lobby
      * @param controller the controller-class you want to change to
      */
-public void changeMainController(State controller){
-    game.pushState(controller);
-}
-public void openKeyboard(){
-    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
-}
+    public void changeMainController(State controller){
+        game.pushState(controller);
+    }
+    public void openKeyboard(){
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
+    }
 
 }
 
