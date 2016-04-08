@@ -17,6 +17,9 @@ import com.example.UbonGo.view.StartLobbyView;
 import com.example.UbonGo.view.StartedLobbyView;
 import com.example.UbonGo.view.View;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import sheep.game.State;
 import sheep.input.KeyboardListener;
 
@@ -51,9 +54,11 @@ public class LobbyController extends State implements KeyboardListener {
             if(playerName.length()<1){
                 throw  new IllegalArgumentException("Missing player name");
             }
-            model=new LobbyModel(playerName, ClientCom.getInstance().startLobby());//The model is only used for the owner
+            model=new LobbyModel(ClientCom.getInstance().startLobby());
+            model.addplayer(playerName);
             ((StartLobbyView) view).removeTextFields();
-            view=new StartedLobbyView(this,true);
+            view=new StartedLobbyView(this,true);//The parameter is true, since this player is the owner. The gui for the owner will therefore be different, to give access to owner functionality
+            ((StartedLobbyView)view).setPlayersList(model.getPlayers());
         }
         catch(IllegalArgumentException e){//If the pin does not exist
             e.printStackTrace();//TODO:Implement functionality to write a message about this in the view. This is an important usability tactic
@@ -68,11 +73,33 @@ public class LobbyController extends State implements KeyboardListener {
             if(playerName.length()<1){
                 throw  new IllegalArgumentException("Missing player name");
             }
-            ClientCom.getInstance().joinPlayer(playerName, pin);
+
+            ArrayList<String> lobbyDetails=new ClientCom().getInstance().joinPlayer(playerName, pin);
+            int difficulty=ClientCom.getInstance().getDifficulty(pin);
+
+            model=new LobbyModel(pin);
             ((StartLobbyView) view).removeTextFields();
-            view=new StartedLobbyView(this,false);
+            view=new StartedLobbyView(this,false);//Owner-parameter set to false.
+            for(String player:lobbyDetails){
+                model.addplayer(player);
+            }
+            model.setDifficulty(difficulty);
+            if(difficulty==0){
+                ((StartedLobbyView) view).writeDifficulty("easy");
+            }
+            else if(difficulty==1){
+                ((StartedLobbyView) view).writeDifficulty("medium");
+            }
+            else if(difficulty==3){
+                ((StartedLobbyView) view).writeDifficulty("hard");
+            }
+
+            ((StartedLobbyView) view).setPlayersList(model.getPlayers());
+
+
+
         }
-        catch(IllegalArgumentException e){//If the pin does not exist
+        catch(IllegalArgumentException e){//If the pin does not exist, or the name is missing
             e.printStackTrace();//TODO:Implement functionality to write a message about this in the view. This is an important usability tactic
         }
 
@@ -80,10 +107,23 @@ public class LobbyController extends State implements KeyboardListener {
     }
 
     public void btnBackToLobbyJoiningClicked(){
-        view=new StartLobbyView(this);
+        main.changeMainController(new LobbyController(main));
+
 
     }
 
+    public void dropDownChanged(String value){
+        if(value=="easy") {
+            model.setDifficulty(0);
+        }
+        else if(value=="medium"){
+            model.setDifficulty(1);
+        }
+        else if(value=="hard"){
+            model.setDifficulty(2);
+        }
+        ClientCom.getInstance().setDifficulty(model.getPin(),model.getDifficulty());
+    }
     public Main getMain(){
         return main;
     }

@@ -98,10 +98,12 @@ public class StartLobbyView implements View, WidgetListener {
 
         }
         else if(action.getSource()== btnStartNewLobby){
+            controller.removeTouchListener(btnBack);
             controller.btnStartNewLobbyClicked(txtPlayerName.getText()+"");
 
         }
         else if(action.getSource()==btnStartExistingLobby){
+            controller.removeTouchListener(btnBack);
             controller.btnStartExistingLobbyClicked(txtPlayerName.getText()+"",txtPin.getText()+"");
 
         }

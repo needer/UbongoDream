@@ -7,14 +7,11 @@ import java.util.ArrayList;
  */
 public class LobbyModel {
     private ArrayList<String> players;
-    private String owner;
     private int difficulty;
     private String pin;
 
-    public LobbyModel(String owner, String pin){
+    public LobbyModel(String pin){
         players=new ArrayList<String>();
-        this.owner=owner;
-        players.add(owner);
         difficulty=0;
         this.pin=pin;
     }
@@ -22,8 +19,9 @@ public class LobbyModel {
     public void addplayer(String player){
         int count=0;//Uses this to make sure that players can't have the same name
         for(String p:players){
-            if(p.equals(player)){
+            if(p.length()>=player.length() && p.substring(0, player.length()).equals(player)) {
                 count++;
+
             }
         }
         if(count==0) {
@@ -48,4 +46,14 @@ public class LobbyModel {
     public int getDifficulty(){
         return difficulty;
     }
+
+    public ArrayList<String> getPlayers(){
+        return players;
+    }
+
+    public String getPin(){
+        return pin;
+    }
+
+
 }
