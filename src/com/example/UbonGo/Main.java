@@ -18,7 +18,6 @@ public class Main extends Activity {
      * Called when the activity is first created.
      */
     private Game game;
-    Sound music;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,8 +35,6 @@ public class Main extends Activity {
         game.pushState(new MenuController(this)); //This displays the main menu when the game is opened.
         // View the game.
         setContentView(game);
-        music = new Sound(R.raw.testes);
-        music.play(-1);
     }
 
     /**

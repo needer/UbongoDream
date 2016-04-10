@@ -3,12 +3,15 @@ package com.example.UbonGo.controller;
 import android.graphics.Canvas;
 import android.widget.Button;
 
+import com.example.UbonGo.GameAudio;
 import com.example.UbonGo.Main;
+import com.example.UbonGo.R;
 import com.example.UbonGo.model.GeneralSettings;
 import com.example.UbonGo.view.MainMenuView;
 import com.example.UbonGo.view.OptionsView;
 import com.example.UbonGo.view.View;
 
+import sheep.game.Game;
 import sheep.game.State;
 
 
@@ -25,6 +28,7 @@ public class MenuController extends State{
         view =new MainMenuView(this);
         this.main=main;
         model=new GeneralSettings();
+        GameAudio.getInstance().playMusic(R.raw.menu);
     }
 
     public void update(float dt){
