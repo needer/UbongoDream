@@ -61,7 +61,7 @@ public class LobbyController extends State implements KeyboardListener {
             ((StartedLobbyView)view).setPlayersList(model.getPlayers());
         }
         catch(IllegalArgumentException e){//If the pin does not exist
-            e.printStackTrace();//TODO:Implement functionality to write a message about this in the view. This is an important usability tactic
+            ((StartLobbyView) view).setError(e.getMessage()); //Prints the error message
         }
 
 
@@ -72,6 +72,9 @@ public class LobbyController extends State implements KeyboardListener {
         try{
             if(playerName.length()<1){
                 throw  new IllegalArgumentException("Missing player name");
+            }
+            if(pin.length()!=4){
+                throw new IllegalArgumentException("Pin must be 4 digits long");
             }
 
             ArrayList<String> lobbyDetails=new ClientCom().getInstance().joinPlayer(playerName, pin);
@@ -100,7 +103,7 @@ public class LobbyController extends State implements KeyboardListener {
 
         }
         catch(IllegalArgumentException e){//If the pin does not exist, or the name is missing
-            e.printStackTrace();//TODO:Implement functionality to write a message about this in the view. This is an important usability tactic
+            ((StartLobbyView) view).setError(e.getMessage()); //Prints the error message
         }
 
 

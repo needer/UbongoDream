@@ -27,7 +27,7 @@ public class StartLobbyView implements View, WidgetListener {
     private android.view.View playerNameLayout;
     private EditText txtPin;
     private PictureButton btnStartExistingLobby;
-    private String playerName;
+    private String errorMessage="";
 
 
     public StartLobbyView(LobbyController controller){
@@ -86,6 +86,7 @@ public class StartLobbyView implements View, WidgetListener {
         canvas.drawText("Player name:", DisplayElements.getInstance().getWidth() * 0.1f, DisplayElements.getInstance().getHeight() * 0.15f, DisplayElements.getInstance().getTextFont(DisplayElements.getInstance().getHeight()));
         canvas.drawText("Start a new lobby:", DisplayElements.getInstance().getWidth() * 0.1f, DisplayElements.getInstance().getHeight() * 0.4f, DisplayElements.getInstance().getTextFont(DisplayElements.getInstance().getHeight()));
         canvas.drawText("Join existing lobby:", DisplayElements.getInstance().getWidth()*0.1f, DisplayElements.getInstance().getHeight()*0.6f,DisplayElements.getInstance().getTextFont(DisplayElements.getInstance().getHeight()));
+        canvas.drawText(errorMessage, DisplayElements.getInstance().getWidth()*0.15f, DisplayElements.getInstance().getHeight()*0.85f,DisplayElements.getInstance().getErrorTextFont(DisplayElements.getInstance().getHeight()));
     }
 
     public void removeTextFields(){
@@ -107,6 +108,9 @@ public class StartLobbyView implements View, WidgetListener {
             controller.btnStartExistingLobbyClicked(txtPlayerName.getText()+"",txtPin.getText()+"");
 
         }
+    }
+    public void setError(String error){
+        errorMessage=error;
     }
 
 

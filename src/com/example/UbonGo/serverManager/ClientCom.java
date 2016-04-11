@@ -29,7 +29,7 @@ public class ClientCom implements ServerListener {
      * Adds a player to a lobby
      * @param player The name of the player
      * @param pin The pin for the lobby which the player should be joined to
-     * @return A string containing game information, using the following format: player|player|player|player|player|boardID|difficulty
+     * @return A string containing game information, using the following format: player|player|player|player|player
      */
     public ArrayList<String> joinPlayer(String player, String pin){
         //TODO: Implement this method

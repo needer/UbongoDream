@@ -59,6 +59,13 @@ public class DisplayElements {
 
     }
 
+    //Font used for error messages in the game
+    public Paint getErrorTextFont(int screenHeight){
+        Paint font= new Font(255, 0, 0, screenHeight*0.07F, Typeface.SANS_SERIF, 1);
+        return font;
+
+    }
+
     //The back-button will always be placed on the same side, it can therefore be generalized with this method.
     public PictureButton getBackButton(){
         return new PictureButton(R.drawable.back_button,getWidth()*0.05f,getHeight()*0.7f);
