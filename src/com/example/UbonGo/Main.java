@@ -49,6 +49,15 @@ public class Main extends Activity {
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
     }
 
+    public void onDestroy(){
+        super.onDestroy();
+        game.popState();
+    }
+
+    public void onBackPressed(){ //The back button closes the game, we may want to change this...
+        finish();
+    }
+
 }
 
 

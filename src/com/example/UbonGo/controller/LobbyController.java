@@ -60,7 +60,7 @@ public class LobbyController extends State implements KeyboardListener {
             view=new StartedLobbyView(this,true);//The parameter is true, since this player is the owner. The gui for the owner will therefore be different, to give access to owner functionality
             ((StartedLobbyView)view).setPlayersList(model.getPlayers());
         }
-        catch(IllegalArgumentException e){//If the pin does not exist
+        catch(IllegalArgumentException e){
             ((StartLobbyView) view).setError(e.getMessage()); //Prints the error message
         }
 
@@ -102,7 +102,7 @@ public class LobbyController extends State implements KeyboardListener {
 
 
         }
-        catch(IllegalArgumentException e){//If the pin does not exist, or the name is missing
+        catch(IllegalArgumentException e){
             ((StartLobbyView) view).setError(e.getMessage()); //Prints the error message
         }
 

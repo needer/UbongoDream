@@ -58,22 +58,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/com/example/UbonGo/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="33" column="31" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="ServerListener.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/com/example/UbonGo/serverManager/ServerListener.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="5" column="17" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-              <folding />
+            <state vertical-scroll-proportion="0.6772152">
+              <caret line="51" column="28" selection-start-line="51" selection-start-column="28" selection-end-line="51" selection-end-column="28" />
+              <folding>
+                <element signature="e#1477#1478#0" expanded="true" />
+                <element signature="e#1519#1520#0" expanded="true" />
+                <element signature="e#1844#1845#0" expanded="true" />
+                <element signature="e#1933#1934#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -98,11 +93,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LobbyController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="LobbyController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/com/example/UbonGo/controller/LobbyController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="1.3765823">
-              <caret line="76" column="77" selection-start-line="76" selection-start-column="77" selection-end-line="76" selection-end-column="77" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="80" column="55" selection-start-line="80" selection-start-column="55" selection-end-line="80" selection-end-column="55" />
               <folding>
                 <element signature="e#1050#1051#0" expanded="true" />
                 <element signature="e#1093#1094#0" expanded="true" />
@@ -182,7 +177,6 @@
         <option value="$PROJECT_DIR$/src/com/example/UbonGo/view/OptionsView.java" />
         <option value="$PROJECT_DIR$/src/com/example/UbonGo/view/StartedLobbyView.java" />
         <option value="$PROJECT_DIR$/src/com/example/UbonGo/controller/MenuController.java" />
-        <option value="$PROJECT_DIR$/src/com/example/UbonGo/Main.java" />
         <option value="$PROJECT_DIR$/src/com/example/UbonGo/model/GameModel.java" />
         <option value="$PROJECT_DIR$/src/com/example/UbonGo/model/GamePiece.java" />
         <option value="$PROJECT_DIR$/src/com/example/UbonGo/model/GameBoard.java" />
@@ -190,6 +184,7 @@
         <option value="$PROJECT_DIR$/src/com/example/UbonGo/DisplayElements.java" />
         <option value="$PROJECT_DIR$/src/com/example/UbonGo/view/StartLobbyView.java" />
         <option value="$PROJECT_DIR$/src/com/example/UbonGo/controller/LobbyController.java" />
+        <option value="$PROJECT_DIR$/src/com/example/UbonGo/Main.java" />
       </list>
     </option>
   </component>
@@ -700,13 +695,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/com/example/UbonGo/view/View.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="11" column="0" selection-start-line="11" selection-start-column="0" selection-end-line="11" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/example/UbonGo/model/GameModel.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1040,14 +1028,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/com/example/UbonGo/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="33" column="31" selection-start-line="33" selection-start-column="31" selection-end-line="33" selection-end-column="31" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/com/example/UbonGo/serverManager/ClientCom.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1080,11 +1060,32 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/com/example/UbonGo/controller/LobbyController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.3765823">
-          <caret line="76" column="77" selection-start-line="76" selection-start-column="77" selection-end-line="76" selection-end-column="77" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="80" column="55" selection-start-line="80" selection-start-column="55" selection-end-line="80" selection-end-column="55" />
           <folding>
             <element signature="e#1050#1051#0" expanded="true" />
             <element signature="e#1093#1094#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$PROJECT_DIR$/libs/sheep.jar!/sheep/graphics/Image.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3322785">
+          <caret line="62" column="0" selection-start-line="62" selection-start-column="0" selection-end-line="62" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/com/example/UbonGo/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6772152">
+          <caret line="51" column="28" selection-start-line="51" selection-start-column="28" selection-end-line="51" selection-end-column="28" />
+          <folding>
+            <element signature="e#1477#1478#0" expanded="true" />
+            <element signature="e#1519#1520#0" expanded="true" />
+            <element signature="e#1844#1845#0" expanded="true" />
+            <element signature="e#1933#1934#0" expanded="true" />
           </folding>
         </state>
       </provider>
