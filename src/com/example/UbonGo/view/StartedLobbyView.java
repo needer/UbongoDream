@@ -69,6 +69,8 @@ public class StartedLobbyView implements View, WidgetListener {
                     ViewGroup.LayoutParams.FILL_PARENT));
             //Start game button
             btnStartGame=new TextButton(DisplayElements.getInstance().getWidth()*0.5f, DisplayElements.getInstance().getHeight()*0.75f, "Start game", DisplayElements.getInstance().getButtonFont(Math.round(DisplayElements.getInstance().getHeight() * 1.5f)));
+            controller.addTouchListener(btnStartGame);
+            btnStartGame.addWidgetListener(this);
         }
 
 
@@ -113,6 +115,10 @@ public class StartedLobbyView implements View, WidgetListener {
             if(isOwner){
                 ((ViewGroup) layout.getParent()).removeView(layout);
             }
+        }
+        if (action.getSource() == btnStartGame && isOwner) {
+            controller.btnStartGameClicked();
+            ((ViewGroup) layout.getParent()).removeView(layout);
         }
     }
     public void setPlayersList(ArrayList<String> players){

@@ -87,4 +87,12 @@ public class DisplayElements {
         return new Image(R.drawable.ubongo_background_text);
     }
 
+    public Image getPieceSquare() {
+        return new Image(R.drawable.square);
+    }
+
+    public Image getEmptySquare(){
+        return new Image(R.drawable.empty_square);
+    }
+
 }

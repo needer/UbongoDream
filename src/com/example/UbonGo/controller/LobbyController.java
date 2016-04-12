@@ -57,7 +57,7 @@ public class LobbyController extends State implements KeyboardListener {
             model=new LobbyModel(ClientCom.getInstance().startLobby());
             model.addplayer(playerName);
             ((StartLobbyView) view).removeTextFields();
-            view=new StartedLobbyView(this,true);//The parameter is true, since this player is the owner. The gui for the owner will therefore be different, to give access to owner functionality
+            view=new StartedLobbyView(this,true); //The parameter is true, since this player is the owner. The gui for the owner will therefore be different, to give access to owner functionality
             ((StartedLobbyView)view).setPlayersList(model.getPlayers());
         }
         catch(IllegalArgumentException e){
@@ -113,6 +113,12 @@ public class LobbyController extends State implements KeyboardListener {
         main.changeMainController(new LobbyController(main));
 
 
+    }
+
+    public void btnStartGameClicked()
+    {
+        System.out.println("Starting the game");
+        main.changeMainController(new GameController(main));
     }
 
     public void dropDownChanged(String value){
