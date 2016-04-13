@@ -1,5 +1,8 @@
 package com.example.UbonGo.model;
 
+import android.util.Pair;
+
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -7,27 +10,19 @@ import java.util.List;
  */
 public class GamePiece{
 
-    private final int height;
-    private final int width;
-    private final boolean[][] blockedCells;
+    private float x;
+    private float y;
+    private List<Pair<Integer, Integer>> slots; // TODO: Rename if it's weird
 
-    public GamePiece(int width, int height, List<Integer> blockedCells){
-        this.height = height;
-        this.width = width;
+    public GamePiece(List<Integer> blockedCells){
 
         //TODO fill blocked cells
-        this.blockedCells = new boolean[width][height];
     }
 
-    public int getHeight() {
-        return height;
+    public void setPosition(float x, float y)
+    {
+        this.x = x;
+        this.y = y;
     }
 
-    public int getWidth() {
-        return width;
-    }
-
-    public boolean[][] getBlockedCells() {
-        return blockedCells;
-    }
 }

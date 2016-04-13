@@ -13,11 +13,8 @@ public class GameBoard{
     private int width;
     private int height;
 
-    private boolean[][] cellBlockedInBoard;
-    private boolean[][] cellFilledWithPiece;
-
     private List<GamePiece> piecesOnBoard;
-    private HashMap<GamePiece, Pair<Integer, Integer>> piecePositions;
+    private List<Pair<Integer, Integer>> slots;
 
     //TODO pieces that are not placed on the board
 
@@ -25,9 +22,6 @@ public class GameBoard{
         this.height = height;
         this.width = width;
 
-        //TODO fill blocked cells
-        cellBlockedInBoard = new boolean[width][height];
-        cellFilledWithPiece = new boolean[width][height];
     }
 
     public void addPiece(GamePiece piece){
@@ -37,7 +31,6 @@ public class GameBoard{
 
     public void removePiece(GamePiece piece){
         piecesOnBoard.remove(piece);
-        piecePositions.remove(piece);
     }
 
     public boolean isCompleted(){
