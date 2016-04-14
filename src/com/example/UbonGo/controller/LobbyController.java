@@ -77,7 +77,7 @@ public class LobbyController extends State implements KeyboardListener {
                 throw new IllegalArgumentException("Pin must be 4 digits long");
             }
 
-            ArrayList<String> lobbyDetails=new ClientCom().getInstance().joinPlayer(playerName, pin);
+            ArrayList<String> lobbyDetails=ClientCom.getInstance().joinPlayer(playerName, pin);
             int difficulty=ClientCom.getInstance().getDifficulty(pin);
 
             model=new LobbyModel(pin);
@@ -122,13 +122,13 @@ public class LobbyController extends State implements KeyboardListener {
     }
 
     public void dropDownChanged(String value){
-        if(value=="easy") {
+        if("easy".equals(value)) {
             model.setDifficulty(0);
         }
-        else if(value=="medium"){
+        else if("medium".equals(value)){
             model.setDifficulty(1);
         }
-        else if(value=="hard"){
+        else if("hard".equals(value)){
             model.setDifficulty(2);
         }
         ClientCom.getInstance().setDifficulty(model.getPin(),model.getDifficulty());
