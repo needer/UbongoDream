@@ -2,7 +2,7 @@ package com.example.UbonGo.model;
 
 import android.util.Pair;
 
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,36 +10,39 @@ import java.util.List;
  */
 public class GameBoard{
 
-    private int width;
-    private int height;
+    private int maxNumberOfSlotsHorizontal;
+    private int maxNumberOfSlotsVertical;
 
     private List<GamePiece> piecesOnBoard;
     private List<Pair<Integer, Integer>> slots;
 
-    //TODO pieces that are not placed on the board
-
-    public GameBoard(int width, int height, List<Integer> blockedCells){
-        this.height = height;
-        this.width = width;
-
+    public GameBoard(int maxNumberOfSlotsHorizontal, int maxNumberOfSlotsVertical, List<Pair<Integer, Integer>> slots){
+        piecesOnBoard = new ArrayList<>();
+        this.maxNumberOfSlotsHorizontal = maxNumberOfSlotsHorizontal;
+        this.maxNumberOfSlotsVertical = maxNumberOfSlotsVertical;
+        this.slots = slots;
     }
 
     public void addPiece(GamePiece piece){
         piecesOnBoard.add(piece);
-        piecePositions.put(piece, null);
-    }
-
-    public void removePiece(GamePiece piece){
-        piecesOnBoard.remove(piece);
     }
 
     public boolean isCompleted(){
-        for (int x = 0; x < cellFilledWithPiece.length; x++){
-              for (int y = 0; y < cellFilledWithPiece[x].length; y++){
-                  if(cellFilledWithPiece[x][y] == false && cellBlockedInBoard[x][y] == false){
-                      return false;
-                  }
-              }
+        for (Pair<Integer, Integer> slot : slots){
+            boolean slotHasPiece = false;
+            for (GamePiece piece : piecesOnBoard){
+                Pair<Integer, Integer> piecePosition = piece.getPositionOfUpperLeftPiece();
+                for (Pair<Integer,Integer> pieceSlot : piece.getSlots()) {
+                    if (piecePosition != null) {
+                        if (piecePosition.first + pieceSlot.first == slot.first && piecePosition.second + pieceSlot.second == slot.second) {
+                            slotHasPiece = true;
+                        }
+                    }
+                }
+            }
+            if (slotHasPiece == false) {
+                return false;
+            }
         }
         return true;
     }
@@ -47,20 +50,34 @@ public class GameBoard{
 
     /***
      * Is the position free from other pieces and belongs to the available part of the gameboard?
-     * @param piece
+     * @param newPiece
      * @param newPosition
      * @return true, if piece can be placed; false, if piece can not be placed.
      */
-    private boolean isPositionFree(GamePiece piece, Pair<Integer, Integer> newPosition){
+    private boolean isPositionFree(GamePiece newPiece, Pair<Integer, Integer> newPosition){
 
-        for (int x = 0; x <  piece.getWidth(); x++){
-            int gameBoardX = newPosition.first + x;
-            for (int y = newPosition.second; y < piece.getHeight(); y++){
-                int gameBoardY = newPosition.second + y;
-                if ((cellFilledWithPiece[gameBoardX][gameBoardY] ||
-                        cellBlockedInBoard[gameBoardX][gameBoardY]) && piece.getBlockedCells()[x][y] == false){
+        for (Pair<Integer, Integer> newPieceSlot : newPiece.getSlots()){
+            //check if there is a slot at the board
+            boolean slotAvailable = false;
+            for (Pair<Integer,Integer> boardSlot : slots){
+                if (newPosition.first + newPieceSlot.first == boardSlot.first && newPosition.second + newPieceSlot.second == boardSlot.second){
+                    slotAvailable = true;
+                }
+            }
+            if (slotAvailable == false){
+                return false;
+            }
 
-                    return false;
+            //check if the slot is free
+            for (GamePiece otherPiece : piecesOnBoard){
+                Pair<Integer, Integer> otherPiecePosition = otherPiece.getPositionOfUpperLeftPiece();
+                if (otherPiecePosition != null) {
+                    for (Pair<Integer, Integer> otherPieceSlot : otherPiece.getSlots()) {
+                        if (otherPiecePosition.first + otherPieceSlot.first == newPosition.first + newPieceSlot.first &&
+                                otherPiecePosition.second + otherPieceSlot.second == newPosition.second + newPieceSlot.second){
+                            return false;
+                        }
+                    }
                 }
             }
         }
@@ -71,28 +88,43 @@ public class GameBoard{
      * Tries to set a piece to a new positions.
      * @param piece
      * @param newPosition
-     * @return true, if possible; false, if cell already blocked.
      */
-    public boolean setNewPiecePosition(GamePiece piece, Pair<Integer, Integer> newPosition){
-        //remove piece from old Position
-        Pair<Integer, Integer> oldPosition = piecePositions.get(piece);
-        for (int x = oldPosition.first; x < oldPosition.first + piece.getWidth(); x++){
-            for (int y = oldPosition.second; y < oldPosition.second + piece.getHeight(); y++){
-                cellFilledWithPiece[x][y] = false;
-                oldPosition = null;
-            }
-        }
-
-        //set piece to new position, if possible
+    public void setNewPiecePosition(GamePiece piece, Pair<Integer, Integer> newPosition){
         if (isPositionFree(piece, newPosition)){
-            for (int x = newPosition.first; x < newPosition.first + piece.getWidth(); x++){
-                for (int y = newPosition.second; y < newPosition.second + piece.getHeight(); y++){
-                    cellFilledWithPiece[x][y] = true;
-                    oldPosition = newPosition;
-                    return true;
+            Pair<Float, Float> totalPosition = calculateTotalPosition(newPosition);
+            piece.setPosition(totalPosition.first, totalPosition.second);
+            piece.setNewBoardPosition(newPosition);
+        }
+    }
+
+    private Pair<Float, Float> calculateTotalPosition(Pair<Integer, Integer> slot){
+        float x = slot.first / maxNumberOfSlotsVertical * 0.5f + 0.5f; //magic numbers -> only right half
+        float y = slot.second / maxNumberOfSlotsHorizontal;
+        return new Pair<Float, Float>(x, y);
+    }
+
+    private Pair<Integer, Integer> calculateSlot(float x, float y){
+        int slotXIndex = (int)((x - 0.5f) * 2.0f * maxNumberOfSlotsVertical); //magic numbers -> only right half
+        int slotYIndex = (int)(y * maxNumberOfSlotsHorizontal);
+
+        return new Pair<Integer, Integer>(slotXIndex, slotYIndex);
+    }
+
+    public GamePiece getPiece(float x, float y) {
+        Pair<Integer, Integer> boardSlot = calculateSlot(x, y);
+        for (GamePiece piece : piecesOnBoard){
+            for (Pair<Integer,Integer> pieceSlot : piece.getSlots()){
+                Pair<Integer, Integer> piecePosition = piece.getPositionOfUpperLeftPiece();
+                if (piecePosition != null) {
+                    if (piecePosition.first + pieceSlot.first == boardSlot.first &&
+                            piecePosition.second + pieceSlot.second == boardSlot.second) {
+                        return piece;
+                    }
                 }
             }
         }
-        return false;
+        return null;
     }
 }
+
+

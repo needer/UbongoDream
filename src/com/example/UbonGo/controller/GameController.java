@@ -24,7 +24,7 @@ public class GameController extends State {
     {
         main = m;
         view = new GameView(this);
-        gameModel = new GameModel();
+        gameModel = new GameModel(""); //TODO: set boardString
     }
 
     public void update(float dt){

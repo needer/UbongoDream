@@ -2,6 +2,8 @@ package com.example.UbonGo.model;
 
 import android.util.Pair;
 
+import com.example.UbonGo.DisplayElements;
+
 import sheep.game.Game;
 
 /**
@@ -14,6 +16,7 @@ public class GameModel {
     public GameModel(String boardData)
     {
         // TODO: Use board data to generate board.
+        //board = new GameBoard();
     }
 
     public GameBoard getBoard()
@@ -23,7 +26,8 @@ public class GameModel {
 
     public void movePieceToOn(Pair<Float, Float> position, Pair<Integer, Integer> boardRelativeCoordinate)
     {
-        // TODO: This function will checks if it can be moved, and do so if yes.
+        GamePiece p = getPiece(position);
+        board.setNewPiecePosition(p, boardRelativeCoordinate);
     }
 
     public void movePieceToOff(Pair<Float, Float> startPosition, Pair<Float, Float> endPosition)
@@ -34,8 +38,7 @@ public class GameModel {
 
     public GamePiece getPiece(Pair<Float, Float> pos)
     {
-        // TODO: Return the piece at that location on the "screen"
-        return null;
+        return board.getPiece(pos.first, pos.second);
     }
 
     public void rotate(Pair<Float, Float> pos)
@@ -55,9 +58,9 @@ public class GameModel {
 
     public boolean isCompleted()
     {
-        // TODO: Is the board completed yet?
-        return false;
+        return board.isCompleted();
     }
+
 
 
 
