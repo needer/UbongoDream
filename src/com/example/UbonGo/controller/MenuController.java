@@ -28,7 +28,7 @@ public class MenuController extends State{
         view =new MainMenuView(this);
         this.main=main;
         model=new GeneralSettings();
-        GameAudio.getInstance().playMusic(R.raw.menu);
+        GameAudio.getInstance().playMusic(R.raw.ubongo);
     }
 
     public void update(float dt){
