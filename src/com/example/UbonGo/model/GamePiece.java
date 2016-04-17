@@ -2,6 +2,8 @@ package com.example.UbonGo.model;
 
 import android.util.Pair;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,10 +14,10 @@ public class GamePiece{
     private float x;
     private float y;
     private Pair<Integer, Integer> positionOfUpperLeftPiece;
-    private List<Pair<Integer, Integer>> slots; // TODO: Rename if it's weird
+    private ArrayList<Pair<Integer, Integer>> slots; // TODO: Rename if it's weird
 
-    public GamePiece(List<Pair<Integer, Integer>> slots){
-
+    public GamePiece(ArrayList<Pair<Integer, Integer>> slots){
+        this.slots = slots;
     }
 
     public void setNewBoardPosition(Pair<Integer, Integer> newBoardPosition){
@@ -31,12 +33,18 @@ public class GamePiece{
         }
     }
 
-    public List<Pair<Integer, Integer>> getSlots() {
-        return slots;
+    public float getX()
+    {
+        return x;
     }
 
-    public Pair<Float, Float> totalPosition(){
-        return new Pair<>(x, y);
+    public float getY()
+    {
+        return y;
+    }
+
+    public ArrayList<Pair<Integer, Integer>> getSlots() {
+        return slots;
     }
 
     public Pair<Integer, Integer> getPositionOfUpperLeftPiece() {

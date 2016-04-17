@@ -49,6 +49,8 @@ public class GameController extends State {
 
         // Get the targeted piece
         selectedPiece = gameModel.getPiece(Pair.create(x, y));
+        System.out.println("(" + x + ", " + y + ")");
+        System.out.println("Got: " + selectedPiece);
 
         // Check if double tap
         if (System.currentTimeMillis() - downPressedTime < 200) // Tap time 200ms

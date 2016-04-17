@@ -3,12 +3,17 @@ package com.example.UbonGo.view;
 import android.graphics.Canvas;
 import android.util.Pair;
 import android.view.MotionEvent;
+import android.widget.ArrayAdapter;
 
 import com.example.UbonGo.DisplayElements;
 import com.example.UbonGo.controller.GameController;
 import com.example.UbonGo.model.GameBoard;
 import com.example.UbonGo.model.GamePiece;
 
+import java.util.ArrayList;
+
+import sheep.game.Sprite;
+import sheep.game.SpriteContainer;
 import sheep.graphics.Image;
 import sheep.input.TouchListener;
 
@@ -19,6 +24,8 @@ import sheep.input.TouchListener;
 public class GameView implements View, TouchListener {
     GameController controller;
     private Image background;
+    private Image pieceImage;
+    private Image emptyImage;
     private GameBoard gameBoard;
     private GamePiece ghostedPiece;
 
@@ -28,13 +35,41 @@ public class GameView implements View, TouchListener {
         controller.addTouchListener(this);
 
         background = DisplayElements.getInstance().getBackground();
+        pieceImage = DisplayElements.getInstance().getPieceSquare();
+        emptyImage = DisplayElements.getInstance().getEmptySquare();
     }
 
     public void drawComponents(Canvas canvas){
         background.draw(canvas, 0, 0);
 
-        // Draw board and pieces
+        // Test function
 
+        // Draw board and pieces
+        if (gameBoard != null)
+        {
+            float width = (float)DisplayElements.getInstance().getWidth();
+            float emptyWidth = emptyImage.getWidth();
+            float pieceWidth =  pieceImage.getWidth();
+
+            // Draw board
+            for ( Pair<Integer, Integer> pair : gameBoard.getSlots()) {
+                float x = pair.first * emptyWidth + width / 2.0f;
+                float y = pair.second * emptyWidth;
+                emptyImage.draw(canvas, x, y);
+            }
+
+            // Draw pieces
+            for ( GamePiece piece : gameBoard.getPiecesOnBoard()) {
+                float pieceX = piece.getX();
+                float pieceY = piece.getY();
+
+                for ( Pair<Integer, Integer> pair : piece.getSlots()) {
+                    float x = pair.first * pieceWidth + pieceX;
+                    float y = pair.second * pieceWidth + pieceY;
+                    pieceImage.draw(canvas, x, y);
+                }
+            }
+        }
 
         // Draw ghost
         if (ghostedPiece != null)

@@ -4,6 +4,9 @@ import android.util.Pair;
 
 import com.example.UbonGo.DisplayElements;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import sheep.game.Game;
 
 /**
@@ -16,7 +19,17 @@ public class GameModel {
     public GameModel(String boardData)
     {
         // TODO: Use board data to generate board.
-        //board = new GameBoard();
+
+        // TESTING CODE!!!!!!!!!
+        ArrayList<Pair<Integer, Integer>> slots = new ArrayList<>();
+        slots.add(Pair.create(0, 0));
+        slots.add(Pair.create(1, 0));
+        slots.add(Pair.create(2, 0));
+        slots.add(Pair.create(0, 1));
+        slots.add(Pair.create(1, 1));
+
+        board = new GameBoard(3, 2, slots);
+        board.addPiece(new GamePiece(slots));
     }
 
     public GameBoard getBoard()

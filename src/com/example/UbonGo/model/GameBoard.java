@@ -13,10 +13,10 @@ public class GameBoard{
     private int maxNumberOfSlotsHorizontal;
     private int maxNumberOfSlotsVertical;
 
-    private List<GamePiece> piecesOnBoard;
-    private List<Pair<Integer, Integer>> slots;
+    private ArrayList<GamePiece> piecesOnBoard;
+    private ArrayList<Pair<Integer, Integer>> slots;
 
-    public GameBoard(int maxNumberOfSlotsHorizontal, int maxNumberOfSlotsVertical, List<Pair<Integer, Integer>> slots){
+    public GameBoard(int maxNumberOfSlotsHorizontal, int maxNumberOfSlotsVertical, ArrayList<Pair<Integer, Integer>> slots){
         piecesOnBoard = new ArrayList<>();
         this.maxNumberOfSlotsHorizontal = maxNumberOfSlotsHorizontal;
         this.maxNumberOfSlotsVertical = maxNumberOfSlotsVertical;
@@ -124,6 +124,16 @@ public class GameBoard{
             }
         }
         return null;
+    }
+
+    public ArrayList<Pair<Integer, Integer>> getSlots()
+    {
+        return slots;
+    }
+
+    public ArrayList<GamePiece> getPiecesOnBoard()
+    {
+        return piecesOnBoard;
     }
 }
 
