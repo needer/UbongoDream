@@ -95,10 +95,10 @@ public class GameBoard{
 
     private Pair<Float, Float> calculateTotalPosition(Pair<Integer, Integer> slot){
 
-        float x = (slot.first * DisplayElements.getInstance().getPieceSquare().getWidth() * 0.5f + 0.5f)
-                / DisplayElements.getInstance().getWidth() ; //magic numbers -> only right half
-        float y = (slot.second * DisplayElements.getInstance().getPieceSquare().getHeight())
-                / DisplayElements.getInstance().getHeight();
+        float x = (slot.first * DisplayElements.getInstance().getPieceSquare().getWidth() /
+                DisplayElements.getInstance().getWidth() * 0.5f + 0.5f); //magic numbers -> only right half
+        float y = slot.second * DisplayElements.getInstance().getPieceSquare().getHeight() /
+                DisplayElements.getInstance().getHeight();
         return new Pair<Float, Float>(x, y);
     }
 
