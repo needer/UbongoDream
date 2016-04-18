@@ -2,12 +2,7 @@ package com.example.UbonGo.model;
 
 import android.util.Pair;
 
-import com.example.UbonGo.DisplayElements;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-
-import sheep.game.Game;
 
 /**
  * Created by Sindre on 17.03.2016.
@@ -15,7 +10,7 @@ import sheep.game.Game;
 public class GameModel {
 
     private GameBoard board;
-    private GamePiece ghostPiece;
+    private GamePiece ghostedPiece;
 
     public GameModel(String boardData)
     {
@@ -94,16 +89,26 @@ public class GameModel {
     }
 
 
-    public GamePiece getGhostPiece() {
-        return ghostPiece;
+    public GamePiece getGhostedPiece() {
+        return ghostedPiece;
     }
 
-    public void setGhostPiece(GamePiece ghostPiece) {
-        if (ghostPiece != null){
-            this.ghostPiece = new GamePiece(ghostPiece);
+    public void setGhostedPiece(GamePiece ghostedPiece) {
+        if (ghostedPiece != null){
+            this.ghostedPiece = new GamePiece(ghostedPiece);
         }else{
-            this.ghostPiece = null;
+            this.ghostedPiece = null;
         }
+    }
+
+    /**
+     * If there's a ghost, this changes its position.
+     * @param position
+     */
+    public void setGhostedPiecePosition(Pair<Float, Float> position)
+    {
+        if (ghostedPiece != null)
+            ghostedPiece.setPosition(position.first, position.second);
     }
 }
 
