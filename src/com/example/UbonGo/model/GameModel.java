@@ -28,7 +28,7 @@ public class GameModel {
         slots.add(Pair.create(0, 1));
         slots.add(Pair.create(1, 1));
 
-        board = new GameBoard(3, 2, slots);
+        board = new GameBoard(slots);
         board.addPiece(new GamePiece(slots));
     }
 
@@ -46,7 +46,17 @@ public class GameModel {
     public void movePieceToOff(Pair<Float, Float> startPosition, Pair<Float, Float> endPosition)
     {
         GamePiece p = getPiece(startPosition);
-        p.setPosition(endPosition.first, endPosition.second);
+        System.out.println("(" + startPosition.first + ", " + startPosition.second + ")");
+        System.out.println("Got for OffMove: " + p);
+
+        if (p != null){
+            //calculate upper left corner
+            float positionX = p.getX() + (endPosition.first - startPosition.first);
+            float positionY = p.getY() + (endPosition.second - startPosition.second);
+
+            p.setPosition(positionX, positionY);
+
+        }
     }
 
     public GamePiece getPiece(Pair<Float, Float> pos)

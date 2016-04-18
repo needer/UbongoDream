@@ -3,17 +3,12 @@ package com.example.UbonGo.view;
 import android.graphics.Canvas;
 import android.util.Pair;
 import android.view.MotionEvent;
-import android.widget.ArrayAdapter;
 
 import com.example.UbonGo.DisplayElements;
 import com.example.UbonGo.controller.GameController;
 import com.example.UbonGo.model.GameBoard;
 import com.example.UbonGo.model.GamePiece;
 
-import java.util.ArrayList;
-
-import sheep.game.Sprite;
-import sheep.game.SpriteContainer;
 import sheep.graphics.Image;
 import sheep.input.TouchListener;
 
@@ -59,7 +54,7 @@ public class GameView implements View, TouchListener {
             }
 
             // Draw pieces
-            for ( GamePiece piece : gameBoard.getPiecesOnBoard()) {
+            for ( GamePiece piece : gameBoard.getPieces()) {
                 float pieceX = piece.getX();
                 float pieceY = piece.getY();
 

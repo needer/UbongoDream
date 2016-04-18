@@ -28,6 +28,8 @@ public class GamePiece{
     {
         this.x = x;
         this.y = y;
+        System.out.println("new position x: " + this.x);
+        System.out.println("new position y: " + this.y);
         if (x < 0.5){
             positionOfUpperLeftPiece = null;
         }

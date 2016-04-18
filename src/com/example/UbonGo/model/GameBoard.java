@@ -2,35 +2,31 @@ package com.example.UbonGo.model;
 
 import android.util.Pair;
 
+import com.example.UbonGo.DisplayElements;
+
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by Julia on 05/04/2016.
  */
 public class GameBoard{
 
-    private int maxNumberOfSlotsHorizontal;
-    private int maxNumberOfSlotsVertical;
-
-    private ArrayList<GamePiece> piecesOnBoard;
+    private ArrayList<GamePiece> pieces;
     private ArrayList<Pair<Integer, Integer>> slots;
 
-    public GameBoard(int maxNumberOfSlotsHorizontal, int maxNumberOfSlotsVertical, ArrayList<Pair<Integer, Integer>> slots){
-        piecesOnBoard = new ArrayList<>();
-        this.maxNumberOfSlotsHorizontal = maxNumberOfSlotsHorizontal;
-        this.maxNumberOfSlotsVertical = maxNumberOfSlotsVertical;
+    public GameBoard( ArrayList<Pair<Integer, Integer>> slots){
+        pieces = new ArrayList<>();
         this.slots = slots;
     }
 
     public void addPiece(GamePiece piece){
-        piecesOnBoard.add(piece);
+        pieces.add(piece);
     }
 
     public boolean isCompleted(){
         for (Pair<Integer, Integer> slot : slots){
             boolean slotHasPiece = false;
-            for (GamePiece piece : piecesOnBoard){
+            for (GamePiece piece : pieces){
                 Pair<Integer, Integer> piecePosition = piece.getPositionOfUpperLeftPiece();
                 for (Pair<Integer,Integer> pieceSlot : piece.getSlots()) {
                     if (piecePosition != null) {
@@ -69,7 +65,7 @@ public class GameBoard{
             }
 
             //check if the slot is free
-            for (GamePiece otherPiece : piecesOnBoard){
+            for (GamePiece otherPiece : pieces){
                 Pair<Integer, Integer> otherPiecePosition = otherPiece.getPositionOfUpperLeftPiece();
                 if (otherPiecePosition != null) {
                     for (Pair<Integer, Integer> otherPieceSlot : otherPiece.getSlots()) {
@@ -98,28 +94,30 @@ public class GameBoard{
     }
 
     private Pair<Float, Float> calculateTotalPosition(Pair<Integer, Integer> slot){
-        float x = slot.first / maxNumberOfSlotsVertical * 0.5f + 0.5f; //magic numbers -> only right half
-        float y = slot.second / maxNumberOfSlotsHorizontal;
+
+        float x = (slot.first * DisplayElements.getInstance().getPieceSquare().getWidth() * 0.5f + 0.5f)
+                / DisplayElements.getInstance().getWidth() ; //magic numbers -> only right half
+        float y = (slot.second * DisplayElements.getInstance().getPieceSquare().getHeight())
+                / DisplayElements.getInstance().getHeight();
         return new Pair<Float, Float>(x, y);
     }
 
-    private Pair<Integer, Integer> calculateSlot(float x, float y){
-        int slotXIndex = (int)((x - 0.5f) * 2.0f * maxNumberOfSlotsVertical); //magic numbers -> only right half
-        int slotYIndex = (int)(y * maxNumberOfSlotsHorizontal);
-
-        return new Pair<Integer, Integer>(slotXIndex, slotYIndex);
-    }
-
     public GamePiece getPiece(float x, float y) {
-        Pair<Integer, Integer> boardSlot = calculateSlot(x, y);
-        for (GamePiece piece : piecesOnBoard){
+        for (int i = 0; i < pieces.size(); i++){
+            GamePiece piece = pieces.get(i);
             for (Pair<Integer,Integer> pieceSlot : piece.getSlots()){
-                Pair<Integer, Integer> piecePosition = piece.getPositionOfUpperLeftPiece();
-                if (piecePosition != null) {
-                    if (piecePosition.first + pieceSlot.first == boardSlot.first &&
-                            piecePosition.second + pieceSlot.second == boardSlot.second) {
-                        return piece;
-                    }
+                double verticalSlotSize = DisplayElements.getInstance().getPieceSquare().getHeight()
+                        / DisplayElements.getInstance().getHeight();
+                double horizontalSlotSize = DisplayElements.getInstance().getPieceSquare().getWidth()
+                        / DisplayElements.getInstance().getWidth();
+
+                boolean fitsVertical = piece.getY() + verticalSlotSize * pieceSlot.second <= y &&
+                        y <= piece.getY() + verticalSlotSize * (pieceSlot.second + 1);
+                boolean fitsHorizontal = piece.getX() + horizontalSlotSize * pieceSlot.first <= x &&
+                        x <= piece.getX() + horizontalSlotSize * (pieceSlot.first + 1);
+
+                if (fitsVertical && fitsHorizontal) {
+                    return piece;
                 }
             }
         }
@@ -131,9 +129,9 @@ public class GameBoard{
         return slots;
     }
 
-    public ArrayList<GamePiece> getPiecesOnBoard()
+    public ArrayList<GamePiece> getPieces()
     {
-        return piecesOnBoard;
+        return pieces;
     }
 }
 
