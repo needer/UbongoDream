@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.inputmethod.InputMethodManager;
 
 import com.example.UbonGo.controller.MenuController;
@@ -38,26 +39,20 @@ public class Main extends Activity {
     }
 
     /**
-     * Called when you want to change the state, for instance when you want too go from main menu to lobby
+     * Called when you want to change the state, for instance when you want to go from main menu to lobby
      * @param controller the controller-class you want to change to
      */
     public void changeMainController(State controller){
         game.pushState(controller);
     }
-    public void openKeyboard(){
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0);
-    }
 
-    public void onDestroy(){
-        super.onDestroy();
-        game.popState();
-    }
+
 
     public void onBackPressed(){ //The back button closes the game, we may want to change this...
-        finish();
-    }
+        int pid = android.os.Process.myPid();
+        android.os.Process.killProcess(pid);
 
+    }
 }
 
 
