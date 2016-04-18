@@ -94,24 +94,24 @@ public class GameView implements View, TouchListener {
     @Override
     public boolean onTouchDown(MotionEvent event) {
         controller.touchDown(
-                event.getX() / DisplayElements.getInstance().getWidth(),
-                event.getY() / DisplayElements.getInstance().getHeight());
+                event.getX(),
+                event.getY());
         return false;
     }
 
     @Override
     public boolean onTouchUp(MotionEvent event) {
         controller.touchUp(
-                event.getX() / DisplayElements.getInstance().getWidth(),
-                event.getY() / DisplayElements.getInstance().getHeight());
+                event.getX(),
+                event.getY());
         return false;
     }
 
     @Override
     public boolean onTouchMove(MotionEvent event) {
         controller.touchMove(
-                event.getX() / DisplayElements.getInstance().getWidth(),
-                event.getY() / DisplayElements.getInstance().getHeight());
+                event.getX(),
+                event.getY());
         return false;
     }
 }

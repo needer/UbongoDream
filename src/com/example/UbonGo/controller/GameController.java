@@ -3,6 +3,7 @@ package com.example.UbonGo.controller;
 import android.graphics.Canvas;
 import android.util.Pair;
 
+import com.example.UbonGo.DisplayElements;
 import com.example.UbonGo.Main;
 import com.example.UbonGo.model.GameModel;
 import com.example.UbonGo.model.GamePiece;
@@ -43,18 +44,21 @@ public class GameController extends State {
 
     public void touchDown(float x, float y)
     {
+        float relativeX = x / DisplayElements.getInstance().getWidth();
+        float relativeY = y / DisplayElements.getInstance().getHeight();
         // Set the start position used for moving pieces
-        startPosition = Pair.create(x, y);
+        startPosition = Pair.create(relativeX, relativeY);
 
         // Get the targeted piece
-        selectedPiece = gameModel.getPiece(Pair.create(x, y));
-        System.out.println("(" + x + ", " + y + ")");
+        selectedPiece = gameModel.getPiece(Pair.create(relativeX, relativeY));
+        System.out.println("(" + relativeX + ", " + relativeY + ")");
         System.out.println("Got: " + selectedPiece);
 
         // Check if double tap
         if (System.currentTimeMillis() - downPressedTime < 200) // Tap time 200ms
         {
-            gameModel.rotate(Pair.create(x, y));
+            System.out.println("Double tapped!");
+            gameModel.rotate(Pair.create(relativeX, relativeY));
         }
         downPressedTime = System.currentTimeMillis();
 
@@ -67,23 +71,41 @@ public class GameController extends State {
     {
         // Move ghost piece
         if (gameModel.getGhostedPiece() != null)
-            gameModel.getGhostedPiece().setPosition(x, y);
+        {
+            float screenWidth = DisplayElements.getInstance().getWidth();
+            float screenHeight = DisplayElements.getInstance().getHeight();
+            float imgWidth = DisplayElements.getInstance().getPieceSquare().getWidth();
+
+            float relX = (x - imgWidth / 2.0f) / screenWidth;
+            float relY = (y - imgWidth / 2.0f) / screenHeight;
+            gameModel.getGhostedPiece().setPosition(relX, relY);
+        }
     }
 
     public void touchUp(float x, float y)
     {
+        float relativeX = x / DisplayElements.getInstance().getWidth();
+        float relativeY = y / DisplayElements.getInstance().getHeight();
+
         // If no piece was selected, don't do nothing
         if (selectedPiece == null)
             return;
 
         // Check what side of the screen it was dropped
-        if (x < 0.5f)
+        if (relativeX < 0.5f)
         { // Left side
-            gameModel.movePieceToOff(startPosition, Pair.create(x, y));
+            gameModel.movePieceToOff(startPosition, Pair.create(relativeX, relativeY));
         }
         else
         { // Right side
-            gameModel.movePieceToOn(startPosition, Pair.create((int)x, (int)y)); // TODO: Fix this; A probable cause of piece misplacement
+            float widthHalf = DisplayElements.getInstance().getWidth() / 2.0f;
+            float imgWidth = DisplayElements.getInstance().getEmptySquare().getWidth();
+            int boardX =  (int)((x - widthHalf) / imgWidth);
+            int boardY =  (int)(y / imgWidth);
+
+            System.out.println("Raw: " + (x - widthHalf) + ", " + y);
+            System.out.println("Placing at: " + boardX + ", " + boardY);
+            gameModel.movePieceToOn(startPosition, Pair.create(boardX, boardY)); // TODO: Fix this; A probable cause of piece misplacement
         }
 
         // Unselect piece
