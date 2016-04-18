@@ -2,17 +2,14 @@ package com.example.UbonGo.controller;
 
 import android.graphics.Canvas;
 import android.util.Pair;
-import android.view.MotionEvent;
 
 import com.example.UbonGo.Main;
-import com.example.UbonGo.model.GameBoard;
 import com.example.UbonGo.model.GameModel;
 import com.example.UbonGo.model.GamePiece;
 import com.example.UbonGo.view.GameView;
 import com.example.UbonGo.view.View;
 
 import sheep.game.State;
-import sheep.input.TouchListener;
 
 /**
  * Created by Sindre on 17.03.2016.
@@ -41,8 +38,7 @@ public class GameController extends State {
         view.drawComponents(canvas);
         ((GameView) view).drawBoard(canvas, gameModel.getBoard());
         ((GameView) view).drawGamePieces(canvas, gameModel.getBoard());
-        ((GameView) view).drawGhost(canvas, gameModel.getGhostPiece());
-
+        ((GameView) view).drawGhost(canvas, gameModel.getGhostedPiece());
     }
 
     public void touchDown(float x, float y)
@@ -63,15 +59,15 @@ public class GameController extends State {
         downPressedTime = System.currentTimeMillis();
 
         // Set ghost
-        gameModel.setGhostPiece(selectedPiece);
+        gameModel.setGhostedPiece(selectedPiece);
 
     }
 
     public void touchMove(float x, float y)
     {
         // Move ghost piece
-        if (gameModel.getGhostPiece() != null)
-            gameModel.getGhostPiece().setPosition(x, y);
+        if (gameModel.getGhostedPiece() != null)
+            gameModel.getGhostedPiece().setPosition(x, y);
     }
 
     public void touchUp(float x, float y)
@@ -94,7 +90,7 @@ public class GameController extends State {
         selectedPiece = null;
 
         // Remove ghost
-        gameModel.setGhostPiece(null);
+        gameModel.setGhostedPiece(null);
         System.out.println(gameModel.isCompleted());
     }
 }
