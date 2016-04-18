@@ -2,17 +2,14 @@ package com.example.UbonGo.controller;
 
 import android.graphics.Canvas;
 import android.util.Pair;
-import android.view.MotionEvent;
 
 import com.example.UbonGo.Main;
-import com.example.UbonGo.model.GameBoard;
 import com.example.UbonGo.model.GameModel;
 import com.example.UbonGo.model.GamePiece;
 import com.example.UbonGo.view.GameView;
 import com.example.UbonGo.view.View;
 
 import sheep.game.State;
-import sheep.input.TouchListener;
 
 /**
  * Created by Sindre on 17.03.2016.
@@ -62,14 +59,14 @@ public class GameController extends State {
 
         // Set ghost
         if (selectedPiece != null)
-            ((GameView)view).setGhostedPiece(selectedPiece);
+            gameModel.setGhostedPiece(selectedPiece);
 
     }
 
     public void touchMove(float x, float y)
     {
         // Move ghost piece
-        ((GameView)view).setGhostedPiecePosition(Pair.create(x, y));
+        gameModel.setGhostedPiecePosition(Pair.create(x, y));
     }
 
     public void touchUp(float x, float y)
@@ -92,7 +89,7 @@ public class GameController extends State {
         selectedPiece = null;
 
         // Remove ghost
-        ((GameView)view).setGhostedPiece(null);
+        gameModel.setGhostedPiece(null);
 
     }
 }

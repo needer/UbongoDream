@@ -82,24 +82,6 @@ public class GameView implements View, TouchListener {
         gameBoard = board;
     }
 
-    /**
-     * Set the ghosted piece.
-     * @param ghost
-     */
-    public void setGhostedPiece(GamePiece ghost)
-    {
-        ghostedPiece = ghost;
-    }
-
-    /**
-     * If there's a ghost, this changes its position.
-     * @param position
-     */
-    public void setGhostedPiecePosition(Pair<Float, Float> position)
-    {
-        if (ghostedPiece != null)
-            ghostedPiece.setPosition(position.first, position.second);
-    }
 
     @Override
     public boolean onTouchDown(MotionEvent event) {
