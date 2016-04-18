@@ -15,6 +15,7 @@ import sheep.game.Game;
 public class GameModel {
 
     private GameBoard board;
+    private GamePiece ghostPiece;
 
     public GameModel(String boardData)
     {
@@ -85,7 +86,16 @@ public class GameModel {
     }
 
 
+    public GamePiece getGhostPiece() {
+        return ghostPiece;
+    }
 
-
+    public void setGhostPiece(GamePiece ghostPiece) {
+        if (ghostPiece != null){
+            this.ghostPiece = new GamePiece(ghostPiece);
+        }else{
+            this.ghostPiece = null;
+        }
+    }
 }
 

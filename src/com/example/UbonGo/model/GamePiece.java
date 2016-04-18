@@ -20,6 +20,21 @@ public class GamePiece{
         this.slots = slots;
     }
 
+    public GamePiece(GamePiece gamePieceToCopy){
+        this.slots = new ArrayList<>();
+        for (Pair<Integer, Integer> slotToCopy : gamePieceToCopy.getSlots()){
+            slots.add(Pair.create(slotToCopy.first.intValue(), slotToCopy.second.intValue()));
+        }
+        this.x = gamePieceToCopy.getX();
+        this.y = gamePieceToCopy.getY();
+
+        if (positionOfUpperLeftPiece != null) {
+            positionOfUpperLeftPiece = new Pair<>(
+                    gamePieceToCopy.getPositionOfUpperLeftPiece().first.intValue(),
+                    gamePieceToCopy.getPositionOfUpperLeftPiece().second.intValue());
+        }
+    }
+
     public void setNewBoardPosition(Pair<Integer, Integer> newBoardPosition){
         positionOfUpperLeftPiece = newBoardPosition;
     }
