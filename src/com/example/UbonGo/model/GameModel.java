@@ -28,9 +28,17 @@ public class GameModel {
         slots.add(Pair.create(2, 0));
         slots.add(Pair.create(0, 1));
         slots.add(Pair.create(1, 1));
+        slots.add(Pair.create(2, 1));
+
+        ArrayList<Pair<Integer, Integer>> slots2 = new ArrayList<>();
+        slots2.add(Pair.create(0, 0));
+        slots2.add(Pair.create(1, 0));
+        slots2.add(Pair.create(2, 0));
+        slots2.add(Pair.create(0, 1));
+        slots2.add(Pair.create(1, 1));
 
         board = new GameBoard(slots);
-        board.addPiece(new GamePiece(slots));
+        board.addPiece(new GamePiece(slots2));
     }
 
     public GameBoard getBoard()

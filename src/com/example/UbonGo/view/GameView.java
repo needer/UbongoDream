@@ -9,6 +9,8 @@ import com.example.UbonGo.controller.GameController;
 import com.example.UbonGo.model.GameBoard;
 import com.example.UbonGo.model.GamePiece;
 
+import java.util.ArrayList;
+
 import sheep.graphics.Image;
 import sheep.input.TouchListener;
 
@@ -21,8 +23,6 @@ public class GameView implements View, TouchListener {
     private Image background;
     private Image pieceImage;
     private Image emptyImage;
-    private GameBoard gameBoard;
-    private GamePiece ghostedPiece;
 
     public GameView(GameController controller)
     {
@@ -36,70 +36,60 @@ public class GameView implements View, TouchListener {
 
     public void drawComponents(Canvas canvas){
         background.draw(canvas, 0, 0);
+    }
 
-        // Test function
+    public void drawBoard(Canvas canvas, GameBoard board)
+    {
+        float width = (float)DisplayElements.getInstance().getWidth();
+        float emptyWidth = emptyImage.getWidth();
 
-        // Draw board and pieces
-        if (gameBoard != null)
-        {
-            float width = (float)DisplayElements.getInstance().getWidth();
-            float emptyWidth = emptyImage.getWidth();
-            float pieceWidth =  pieceImage.getWidth();
-
-            // Draw board
-            for ( Pair<Integer, Integer> pair : gameBoard.getSlots()) {
-                float x = pair.first * emptyWidth + width / 2.0f;
-                float y = pair.second * emptyWidth;
-                emptyImage.draw(canvas, x, y);
-            }
-
-            // Draw pieces
-            for ( GamePiece piece : gameBoard.getPieces()) {
-                float pieceX = piece.getX();
-                float pieceY = piece.getY();
-
-                for ( Pair<Integer, Integer> pair : piece.getSlots()) {
-                    float x = pair.first * pieceWidth + pieceX;
-                    float y = pair.second * pieceWidth + pieceY;
-                    pieceImage.draw(canvas, x, y);
-                }
-            }
-        }
-
-        // Draw ghost
-        if (ghostedPiece != null)
-        {
-
+        // Draw board
+        for ( Pair<Integer, Integer> pair : board.getSlots()) {
+            float x = pair.first * emptyWidth + width / 2.0f;
+            float y = pair.second * emptyWidth;
+            emptyImage.draw(canvas, x, y);
         }
     }
 
-    /**
-     * Updates the board that is drawn.
-     * @param board
-     */
-    public void setGameBoard(GameBoard board)
+    public void drawGamePieces(Canvas canvas, GameBoard board)
     {
-        gameBoard = board;
+        float pieceWidth =  pieceImage.getWidth();
+        float width = (float)DisplayElements.getInstance().getWidth();
+        float height = (float)DisplayElements.getInstance().getHeight();
+
+
+        // Draw pieces
+        for ( GamePiece piece : board.getPieces()) {
+            float pieceX = piece.getX();
+            float pieceY = piece.getY();
+
+            for ( Pair<Integer, Integer> pair : piece.getSlots()) {
+                float x = pair.first * pieceWidth + pieceX * width;
+                float y = pair.second * pieceWidth + pieceY * height;
+                pieceImage.draw(canvas, x, y);
+            }
+        }
     }
 
-    /**
-     * Set the ghosted piece.
-     * @param ghost
-     */
-    public void setGhostedPiece(GamePiece ghost)
+    public void drawGhost(Canvas canvas, GamePiece piece)
     {
-        ghostedPiece = ghost;
+        if (piece == null)
+            return;
+
+        float width = (float)DisplayElements.getInstance().getWidth();
+        float height = (float)DisplayElements.getInstance().getHeight();
+        float pieceWidth =  pieceImage.getWidth();
+        float pieceX = piece.getX();
+        float pieceY = piece.getY();
+
+        for ( Pair<Integer, Integer> pair : piece.getSlots()) {
+            float x = pair.first * pieceWidth + pieceX * width;
+            float y = pair.second * pieceWidth + pieceY * height;
+            pieceImage.draw(canvas, x, y);
+        }
     }
 
-    /**
-     * If there's a ghost, this changes its position.
-     * @param position
-     */
-    public void setGhostedPiecePosition(Pair<Float, Float> position)
-    {
-        if (ghostedPiece != null)
-            ghostedPiece.setPosition(position.first, position.second);
-    }
+
 
     @Override
     public boolean onTouchDown(MotionEvent event) {

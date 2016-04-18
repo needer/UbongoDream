@@ -38,8 +38,11 @@ public class GameController extends State {
     }
 
     public void draw(Canvas canvas){
-        ((GameView) view).setGameBoard(gameModel.getBoard());
         view.drawComponents(canvas);
+        ((GameView) view).drawBoard(canvas, gameModel.getBoard());
+        ((GameView) view).drawGamePieces(canvas, gameModel.getBoard());
+        ((GameView) view).drawGhost(canvas, gameModel.getGhostPiece());
+
     }
 
     public void touchDown(float x, float y)
@@ -59,17 +62,16 @@ public class GameController extends State {
         }
         downPressedTime = System.currentTimeMillis();
 
-
         // Set ghost
-        if (selectedPiece != null)
-            ((GameView)view).setGhostedPiece(selectedPiece);
+        gameModel.setGhostPiece(selectedPiece);
 
     }
 
     public void touchMove(float x, float y)
     {
         // Move ghost piece
-        ((GameView)view).setGhostedPiecePosition(Pair.create(x, y));
+        if (gameModel.getGhostPiece() != null)
+            gameModel.getGhostPiece().setPosition(x, y);
     }
 
     public void touchUp(float x, float y)
@@ -92,7 +94,7 @@ public class GameController extends State {
         selectedPiece = null;
 
         // Remove ghost
-        ((GameView)view).setGhostedPiece(null);
-
+        gameModel.setGhostPiece(null);
+        System.out.println(gameModel.isCompleted());
     }
 }
