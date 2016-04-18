@@ -87,12 +87,14 @@ public class GameModel {
 
     public void rotate(Pair<Float, Float> pos)
     {
-        // TODO: Rotate the piece at that location
+        GamePiece p = getPiece(pos);
+        p.rotate90();
     }
 
     public void flip(Pair<Float, Float> pos)
     {
-        // TODO: Flip it along the y axis
+        GamePiece p = getPiece(pos);
+        p.flipYAxis();
     }
 
     public void undo()

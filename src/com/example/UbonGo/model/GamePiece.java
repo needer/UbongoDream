@@ -67,4 +67,22 @@ public class GamePiece{
     public Pair<Integer, Integer> getPositionOfUpperLeftPiece() {
         return positionOfUpperLeftPiece;
     }
+
+    public void rotate90(){
+        for (int i = 0; i < slots.size(); i++) {
+            Pair<Integer, Integer> slot = slots.get(i);
+            Integer x = -slot.second;
+            Integer y = slot.first;
+            slots.set(i, Pair.create(x, y));
+        }
+    }
+
+    public void flipYAxis(){
+        for (int i = 0; i < slots.size(); i++) {
+            Pair<Integer, Integer> slot = slots.get(i);
+            Integer x = slot.first;
+            Integer y = -slot.second;
+            slots.set(i, Pair.create(x, y));
+        }
+    }
 }
