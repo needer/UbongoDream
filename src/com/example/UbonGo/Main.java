@@ -8,7 +8,9 @@ import android.util.DisplayMetrics;
 import android.view.KeyEvent;
 import android.view.inputmethod.InputMethodManager;
 
+import com.example.UbonGo.controller.GameController;
 import com.example.UbonGo.controller.MenuController;
+import com.example.UbonGo.view.GameView;
 
 import sheep.audio.Sound;
 import sheep.game.Game;
@@ -33,7 +35,8 @@ public class Main extends Activity {
 
         game = new Game(this, null);
         // Push the main state.
-        game.pushState(new MenuController(this)); //This displays the main menu when the game is opened.
+        //game.pushState(new MenuController(this)); //This displays the main menu when the game is opened. TODO: RESET THIS
+        game.pushState(new GameController(this)); //This displays the main menu when the game is opened. TODO: RESET THIS
         // View the game.
         setContentView(game);
     }

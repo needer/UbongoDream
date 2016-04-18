@@ -7,6 +7,7 @@ import com.example.UbonGo.DisplayElements;
 import com.example.UbonGo.Main;
 import com.example.UbonGo.model.GameModel;
 import com.example.UbonGo.model.GamePiece;
+import com.example.UbonGo.serverManager.ClientCom;
 import com.example.UbonGo.view.GameView;
 import com.example.UbonGo.view.View;
 
@@ -46,13 +47,17 @@ public class GameController extends State {
     {
         float relativeX = x / DisplayElements.getInstance().getWidth();
         float relativeY = y / DisplayElements.getInstance().getHeight();
+
+        // Fix the relative if it's on the board
+        if (relativeX >= 0.5f)
+            relativeX = relativeX / 2.0f + 0.25f;
+
         // Set the start position used for moving pieces
         startPosition = Pair.create(relativeX, relativeY);
 
         // Get the targeted piece
         selectedPiece = gameModel.getPiece(Pair.create(relativeX, relativeY));
         System.out.println("(" + relativeX + ", " + relativeY + ")");
-        System.out.println("Got: " + selectedPiece);
 
         // Check if double tap
         if (System.currentTimeMillis() - downPressedTime < 200) // Tap time 200ms
@@ -113,6 +118,12 @@ public class GameController extends State {
 
         // Remove ghost
         gameModel.setGhostedPiece(null);
-        System.out.println(gameModel.isCompleted());
+
+        // Game completion
+        if (gameModel.isCompleted())
+        {
+            // You win!
+
+        }
     }
 }

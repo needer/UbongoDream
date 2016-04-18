@@ -39,12 +39,12 @@ public class GameModel {
         slots2.add(Pair.create(1, 1));
 
         ArrayList<Pair<Integer, Integer>> slots3 = new ArrayList<>();
-        slots2.add(Pair.create(0, 0));
-        slots2.add(Pair.create(1, 0));
-        slots2.add(Pair.create(2, 0));
+        slots3.add(Pair.create(0, 0));
+        slots3.add(Pair.create(1, 0));
+        slots3.add(Pair.create(2, 0));
 
         ArrayList<Pair<Integer, Integer>> slots4 = new ArrayList<>();
-        slots2.add(Pair.create(0, 0));
+        slots4.add(Pair.create(0, 0));
 
         board = new GameBoard(slots);
         board.addPiece(new GamePiece(slots2));

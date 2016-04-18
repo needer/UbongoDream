@@ -57,10 +57,11 @@ public class GameView implements View, TouchListener {
         float width = (float)DisplayElements.getInstance().getWidth();
         float height = (float)DisplayElements.getInstance().getHeight();
 
-
         // Draw pieces
         for ( GamePiece piece : board.getPieces()) {
             float pieceX = piece.getX();
+            if (pieceX >= 0.5f)
+                pieceX = 2.0f * pieceX  - 0.5f;
             float pieceY = piece.getY();
 
             for ( Pair<Integer, Integer> pair : piece.getSlots()) {
@@ -69,6 +70,7 @@ public class GameView implements View, TouchListener {
                 pieceImage.draw(canvas, x, y);
             }
         }
+
     }
 
     public void drawGhost(Canvas canvas, GamePiece piece)
