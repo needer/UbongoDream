@@ -1,5 +1,7 @@
 package com.example.UbonGo.model;
 
+import com.example.UbonGo.GameAudio;
+
 /**
  * Created by Sindre on 17.03.2016.
  */
@@ -7,7 +9,7 @@ public class GeneralSettings {
     private float volume;
 
     public GeneralSettings(){
-        volume=50;
+        volume=70;
     }
 
     public float getVolume(){

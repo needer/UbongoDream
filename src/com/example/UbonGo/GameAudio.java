@@ -57,5 +57,11 @@ public class GameAudio implements OnLoadCompleteListener
         mediaPlayer.start();
     }
 
+    public void setVolume(float volume){
+        float log1=(float)(Math.log(100-volume)/Math.log(100));
+        mediaPlayer.setVolume(1-log1, 1-log1);
+
+    }
+
 
 }

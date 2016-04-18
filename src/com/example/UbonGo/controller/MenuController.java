@@ -29,10 +29,11 @@ public class MenuController extends State{
         this.main=main;
         model=new GeneralSettings();
         GameAudio.getInstance().playMusic(R.raw.ubongo);
+        GameAudio.getInstance().setVolume(model.getVolume());
     }
 
     public void update(float dt){
-
+        GameAudio.getInstance().setVolume(model.getVolume());
     }
 
     public void draw(Canvas canvas){
@@ -76,9 +77,7 @@ public class MenuController extends State{
         }
     }
 
-    public float getVolume(){
-        return model.getVolume();
-    }
+
 
 
 
