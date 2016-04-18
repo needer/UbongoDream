@@ -1,6 +1,7 @@
 package com.example.UbonGo.view;
 
 import android.graphics.Canvas;
+import android.graphics.Matrix;
 import android.util.Pair;
 import android.view.MotionEvent;
 
@@ -23,6 +24,7 @@ public class GameView implements View, TouchListener {
     private Image background;
     private Image pieceImage;
     private Image emptyImage;
+    private float scale;
 
     public GameView(GameController controller)
     {
@@ -38,20 +40,23 @@ public class GameView implements View, TouchListener {
         background.draw(canvas, 0, 0);
     }
 
-    public void drawBoard(Canvas canvas, GameBoard board)
+    public void drawBoard(Canvas canvas, GameBoard board, float scale)
     {
         float width = (float)DisplayElements.getInstance().getWidth();
         float emptyWidth = emptyImage.getWidth();
 
         // Draw board
         for ( Pair<Integer, Integer> pair : board.getSlots()) {
-            float x = pair.first * emptyWidth + width / 2.0f;
-            float y = pair.second * emptyWidth;
-            emptyImage.draw(canvas, x, y);
+            float x = pair.first * emptyWidth * scale + width / 2.0f;
+            float y = pair.second * emptyWidth * scale;
+            Matrix m = new Matrix();
+            m.setScale(scale, scale);
+            m.postTranslate(x, y);
+            emptyImage.draw(canvas, m);
         }
     }
 
-    public void drawGamePieces(Canvas canvas, GameBoard board)
+    public void drawGamePieces(Canvas canvas, GameBoard board, float scale)
     {
         float pieceWidth =  pieceImage.getWidth();
         float width = (float)DisplayElements.getInstance().getWidth();
@@ -60,20 +65,25 @@ public class GameView implements View, TouchListener {
         // Draw pieces
         for ( GamePiece piece : board.getPieces()) {
             float pieceX = piece.getX();
-            if (pieceX >= 0.5f)
-                pieceX = 2.0f * pieceX  - 0.5f;
             float pieceY = piece.getY();
+            if (pieceX >= 0.5f)
+            {
+                pieceX = 0.5f + (pieceX  - 0.5f) * scale * 2.0f;
+                pieceY *= scale;
+            }
 
             for ( Pair<Integer, Integer> pair : piece.getSlots()) {
-                float x = pair.first * pieceWidth + pieceX * width;
-                float y = pair.second * pieceWidth + pieceY * height;
-                pieceImage.draw(canvas, x, y);
+                float x = pair.first * pieceWidth * scale + pieceX * width;
+                float y = pair.second * pieceWidth * scale + pieceY * height;
+                Matrix m = new Matrix();
+                m.setScale(scale, scale);
+                m.postTranslate(x, y);
+                pieceImage.draw(canvas, m);
             }
         }
-
     }
 
-    public void drawGhost(Canvas canvas, GamePiece piece)
+    public void drawGhost(Canvas canvas, GamePiece piece, float scale)
     {
         if (piece == null)
             return;
@@ -85,9 +95,12 @@ public class GameView implements View, TouchListener {
         float pieceY = piece.getY();
 
         for ( Pair<Integer, Integer> pair : piece.getSlots()) {
-            float x = pair.first * pieceWidth + pieceX * width;
-            float y = pair.second * pieceWidth + pieceY * height;
-            pieceImage.draw(canvas, x, y);
+            float x = pair.first * pieceWidth * scale + pieceX * width;
+            float y = pair.second * pieceWidth * scale + pieceY * height;
+            Matrix m = new Matrix();
+            m.setScale(scale, scale);
+            m.postTranslate(x, y);
+            pieceImage.draw(canvas, m);
         }
     }
 

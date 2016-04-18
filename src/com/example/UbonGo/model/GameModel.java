@@ -47,10 +47,10 @@ public class GameModel {
         slots4.add(Pair.create(0, 0));
 
         board = new GameBoard(slots);
-        board.addPiece(new GamePiece(slots2));
-        board.addPiece(new GamePiece(slots3));
-        board.addPiece(new GamePiece(slots3));
-        board.addPiece(new GamePiece(slots4));
+        board.addPiece(new GamePiece(new ArrayList<>(slots2)));
+        board.addPiece(new GamePiece(new ArrayList<>(slots3)));
+        board.addPiece(new GamePiece(new ArrayList<>(slots3)));
+        board.addPiece(new GamePiece(new ArrayList<>(slots4)));
     }
 
     public GameBoard getBoard()
@@ -88,7 +88,8 @@ public class GameModel {
     public void rotate(Pair<Float, Float> pos)
     {
         GamePiece p = getPiece(pos);
-        p.rotate90();
+        if (p != null)
+            p.rotate90();
     }
 
     public void flip(Pair<Float, Float> pos)

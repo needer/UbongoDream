@@ -23,6 +23,7 @@ public class GameController extends State {
     GamePiece selectedPiece;
     Pair<Float, Float> startPosition;
     Long downPressedTime;
+    float scale;
 
     public GameController(Main m) // TODO: change this so that networking decides what board is played, or something
     {
@@ -30,6 +31,7 @@ public class GameController extends State {
         view = new GameView(this);
         gameModel = new GameModel(""); // TODO: set boardString
         downPressedTime = System.currentTimeMillis();
+        scale =  DisplayElements.getInstance().getHeight() / (DisplayElements.getInstance().getEmptySquare().getWidth() * 8);
     }
 
     public void update(float dt){
@@ -38,9 +40,9 @@ public class GameController extends State {
 
     public void draw(Canvas canvas){
         view.drawComponents(canvas);
-        ((GameView) view).drawBoard(canvas, gameModel.getBoard());
-        ((GameView) view).drawGamePieces(canvas, gameModel.getBoard());
-        ((GameView) view).drawGhost(canvas, gameModel.getGhostedPiece());
+        ((GameView) view).drawBoard(canvas, gameModel.getBoard(), scale);
+        ((GameView) view).drawGamePieces(canvas, gameModel.getBoard(), scale);
+        ((GameView) view).drawGhost(canvas, gameModel.getGhostedPiece(), scale);
     }
 
     public void touchDown(float x, float y)
@@ -50,7 +52,10 @@ public class GameController extends State {
 
         // Fix the relative if it's on the board
         if (relativeX >= 0.5f)
-            relativeX = relativeX / 2.0f + 0.25f;
+        {
+            relativeX = (relativeX - 0.5f) * 0.5f / scale + 0.5f;
+            relativeY /= scale;
+        }
 
         // Set the start position used for moving pieces
         startPosition = Pair.create(relativeX, relativeY);
@@ -81,8 +86,8 @@ public class GameController extends State {
             float screenHeight = DisplayElements.getInstance().getHeight();
             float imgWidth = DisplayElements.getInstance().getPieceSquare().getWidth();
 
-            float relX = (x - imgWidth / 2.0f) / screenWidth;
-            float relY = (y - imgWidth / 2.0f) / screenHeight;
+            float relX = (x - imgWidth / 2.0f * scale) / screenWidth;
+            float relY = (y - imgWidth / 2.0f * scale) / screenHeight;
             gameModel.getGhostedPiece().setPosition(relX, relY);
         }
     }
@@ -104,7 +109,7 @@ public class GameController extends State {
         else
         { // Right side
             float widthHalf = DisplayElements.getInstance().getWidth() / 2.0f;
-            float imgWidth = DisplayElements.getInstance().getEmptySquare().getWidth();
+            float imgWidth = DisplayElements.getInstance().getEmptySquare().getWidth() * scale;
             int boardX =  (int)((x - widthHalf) / imgWidth);
             int boardY =  (int)(y / imgWidth);
 
@@ -122,8 +127,13 @@ public class GameController extends State {
         // Game completion
         if (gameModel.isCompleted())
         {
-            // You win!
-
+            System.out.println("YOU WIN!!!");
+            System.out.println("YOU WIN!!!");
+            System.out.println("YOU WIN!!!");
+            System.out.println("YOU WIN!!!");
+            System.out.println("YOU WIN!!!");
+            System.out.println("YOU WIN!!!");
+            // You win! TODO: Implement what happens when the player wins
         }
     }
 }

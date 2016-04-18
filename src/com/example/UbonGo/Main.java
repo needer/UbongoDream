@@ -35,8 +35,7 @@ public class Main extends Activity {
 
         game = new Game(this, null);
         // Push the main state.
-        //game.pushState(new MenuController(this)); //This displays the main menu when the game is opened. TODO: RESET THIS
-        game.pushState(new GameController(this)); //This displays the main menu when the game is opened. TODO: RESET THIS
+        game.pushState(new MenuController(this)); //This displays the main menu when the game is opened.
         // View the game.
         setContentView(game);
     }
