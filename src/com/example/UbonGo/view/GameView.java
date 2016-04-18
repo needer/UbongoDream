@@ -22,7 +22,6 @@ public class GameView implements View, TouchListener {
     private Image pieceImage;
     private Image emptyImage;
     private GameBoard gameBoard;
-    private GamePiece ghostedPiece;
 
     public GameView(GameController controller)
     {
@@ -67,10 +66,10 @@ public class GameView implements View, TouchListener {
         }
 
         // Draw ghost
-        if (ghostedPiece != null)
-        {
-
-        }
+//        if (ghostedPiece != null)
+//        {
+//
+//        }
     }
 
     /**
