@@ -2,6 +2,8 @@ package com.example.UbonGo.model;
 
 import android.util.Pair;
 
+import com.example.UbonGo.DisplayElements;
+
 import java.util.ArrayList;
 
 /**
@@ -11,6 +13,7 @@ public class GameModel {
 
     private GameBoard board;
     private GamePiece ghostedPiece;
+    private GameBoard savedBoard;
 
     public GameModel(String boardData)
     {
@@ -60,23 +63,32 @@ public class GameModel {
 
     public void movePieceToOn(Pair<Float, Float> position, Pair<Integer, Integer> boardRelativeCoordinate)
     {
+        savedBoard =  new GameBoard(board);
         GamePiece p = getPiece(position);
-        board.setNewPiecePosition(p, boardRelativeCoordinate);
+        if (p != null){
+            board.setNewPiecePosition(p, boardRelativeCoordinate);
+        }
     }
 
     public void movePieceToOff(Pair<Float, Float> startPosition, Pair<Float, Float> endPosition)
     {
+        savedBoard =  new GameBoard(board);
         GamePiece p = getPiece(startPosition);
         System.out.println("(" + startPosition.first + ", " + startPosition.second + ")");
         System.out.println("Got for OffMove: " + p);
 
         if (p != null){
+
             //calculate upper left corner
-            float positionX = p.getX() + (endPosition.first - startPosition.first);
-            float positionY = p.getY() + (endPosition.second - startPosition.second);
+            float pieceWidth = DisplayElements.getInstance().getPieceSquare().getWidth();
+            float screenWidth = DisplayElements.getInstance().getWidth();
+            float cornerPositionX = endPosition.first - pieceWidth / 2 / screenWidth;
 
-            p.setPosition(positionX, positionY);
+            float pieceHeight = DisplayElements.getInstance().getPieceSquare().getHeight();
+            float screenHeight = DisplayElements.getInstance().getHeight();
+            float cornerPositionY = endPosition.second - pieceHeight / 2 / screenHeight;
 
+            p.setPosition(cornerPositionX, cornerPositionY);
         }
     }
 
@@ -87,20 +99,76 @@ public class GameModel {
 
     public void rotate(Pair<Float, Float> pos)
     {
+        savedBoard =  new GameBoard(board);
         GamePiece p = getPiece(pos);
-        if (p != null)
+        if (p != null) {
             p.rotate90();
+            Pair<Integer, Integer> referencePosition = p.getBoardPositionOfReferenceSlot();
+            //if the piece has a reference position on the board, check if the rotated piece has collisions
+            if ((referencePosition != null && !board.isPositionFree(p, referencePosition))
+                    || !p.staysOnScreen(p.getX(), p.getY()))
+            {
+                setToStartPosition(p);
+            }
+        }
     }
 
+    /**
+     * Sets the piece back to the 0,0 position.
+     * @param p the piece to set back.
+     */
+    private void setToStartPosition(GamePiece p) {
+        // calculate shift for rotated pieces.
+        Integer minX = 0;
+        Integer minY = 0;
+        for (Pair<Integer, Integer> slot : p.getSlots()){
+            if (minX > slot.first){
+                minX = slot.first;
+            }
+            if (minY > slot.second){
+                minY = slot.second;
+            }
+        }
+
+        //calculate upper left corner of off board position (start position)
+        float pieceWidth = DisplayElements.getInstance().getPieceSquare().getWidth();
+        int screenWidth = DisplayElements.getInstance().getWidth();
+        float positionOffBoardX =  -1 * minX * pieceWidth / screenWidth;
+
+        float pieceHeight = DisplayElements.getInstance().getPieceSquare().getHeight();
+        int screenHeight = DisplayElements.getInstance().getHeight();
+        float positionOffBoardY =  -1 * minY * pieceHeight / screenHeight;
+
+        p.setPosition(positionOffBoardX, positionOffBoardY);
+    }
+
+    /**
+     * Flips a with respect to the Y-Axis
+     * @param pos position of the piece to be flipped.
+     */
     public void flip(Pair<Float, Float> pos)
     {
+        savedBoard =  new GameBoard(board);
         GamePiece p = getPiece(pos);
-        p.flipYAxis();
+        if (p != null) {
+            p.flipYAxis();
+            Pair<Integer, Integer> referencePosition = p.getBoardPositionOfReferenceSlot();
+            //if the piece has a reference position on the board, check if the rotated piece has collisions
+            if (referencePosition != null && !board.isPositionFree(p, referencePosition)){
+                setToStartPosition(p);
+            }
+        }
     }
 
+    /**
+     * replaces the current board with a saved one, if available.
+     */
     public void undo()
     {
-        // TODO: Make this undo your last move.
+        if (savedBoard != null){
+            board = savedBoard;
+            savedBoard = null;
+        }
     }
 
     public boolean isCompleted()
@@ -121,14 +189,5 @@ public class GameModel {
         }
     }
 
-    /**
-     * If there's a ghost, this changes its position.
-     * @param position
-     */
-    public void setGhostedPiecePosition(Pair<Float, Float> position)
-    {
-        if (ghostedPiece != null)
-            ghostedPiece.setPosition(position.first, position.second);
-    }
 }
 
