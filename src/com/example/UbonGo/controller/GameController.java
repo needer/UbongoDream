@@ -52,16 +52,13 @@ public class GameController extends State {
     }
 
     public void flip(){
-        lastSelectedPiece.flipYAxis();
+        if (lastSelectedPiece != null)
+            lastSelectedPiece.flipYAxis();
     }
 
     public void undo(){
-        // TODO: Use gamemodel.undo
-    }
-
-    private void saveState()
-    {
-        // TODO: Use gamemodel.save
+        lastSelectedPiece = null;
+        gameModel.undo();
     }
 
     public void touchDown(float x, float y)

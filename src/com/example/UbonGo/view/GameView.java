@@ -25,6 +25,7 @@ import sheep.input.TouchListener;
 public class GameView implements View, TouchListener, WidgetListener {
     GameController controller;
     private TextButton flip;
+    private TextButton undo;
     private Image background;
     private Image pieceImage;
     private Image emptyImage;
@@ -45,11 +46,19 @@ public class GameView implements View, TouchListener, WidgetListener {
                 DisplayElements.getInstance().getButtonFont(DisplayElements.getInstance().getHeight()));
         controller.addTouchListener(flip);
         flip.addWidgetListener(this);
+
+        undo = new TextButton(DisplayElements.getInstance().getWidth()*0.65f,
+                DisplayElements.getInstance().getHeight()*0.80f,
+                "Undo",
+                DisplayElements.getInstance().getButtonFont(DisplayElements.getInstance().getHeight()));
+        controller.addTouchListener(undo);
+        undo.addWidgetListener(this);
     }
 
     public void drawComponents(Canvas canvas){
         background.draw(canvas, 0, 0);
         flip.draw(canvas);
+        undo.draw(canvas);
     }
 
     public void drawBoard(Canvas canvas, GameBoard board, float scale)
@@ -146,5 +155,7 @@ public class GameView implements View, TouchListener, WidgetListener {
     public void actionPerformed(WidgetAction action) {
         if (action.getSource() == flip)
             controller.flip();
+        if (action.getSource() == undo)
+            controller.undo();
     }
 }
