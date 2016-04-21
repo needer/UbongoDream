@@ -118,7 +118,7 @@ public class LobbyController extends State implements KeyboardListener {
     public void btnStartGameClicked()
     {
         System.out.println("Starting the game");
-        main.changeMainController(new GameController(main));
+        main.changeMainController(new GameController(main, "")); // TODO: Send board string here
     }
 
     public void dropDownChanged(String value){

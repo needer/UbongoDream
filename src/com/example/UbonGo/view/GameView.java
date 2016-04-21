@@ -13,14 +13,18 @@ import com.example.UbonGo.model.GamePiece;
 import java.util.ArrayList;
 
 import sheep.graphics.Image;
+import sheep.gui.TextButton;
+import sheep.gui.WidgetAction;
+import sheep.gui.WidgetListener;
 import sheep.input.TouchListener;
 
 
 /**
  * Created by Sindre on 17.03.2016.
  */
-public class GameView implements View, TouchListener {
+public class GameView implements View, TouchListener, WidgetListener {
     GameController controller;
+    private TextButton flip;
     private Image background;
     private Image pieceImage;
     private Image emptyImage;
@@ -34,10 +38,18 @@ public class GameView implements View, TouchListener {
         background = DisplayElements.getInstance().getBackground();
         pieceImage = DisplayElements.getInstance().getPieceSquare();
         emptyImage = DisplayElements.getInstance().getEmptySquare();
+
+        flip = new TextButton(DisplayElements.getInstance().getWidth()*0.85f,
+                DisplayElements.getInstance().getHeight()*0.80f,
+                "Flip",
+                DisplayElements.getInstance().getButtonFont(DisplayElements.getInstance().getHeight()));
+        controller.addTouchListener(flip);
+        flip.addWidgetListener(this);
     }
 
     public void drawComponents(Canvas canvas){
         background.draw(canvas, 0, 0);
+        flip.draw(canvas);
     }
 
     public void drawBoard(Canvas canvas, GameBoard board, float scale)
@@ -128,5 +140,11 @@ public class GameView implements View, TouchListener {
                 event.getX(),
                 event.getY());
         return false;
+    }
+
+    @Override
+    public void actionPerformed(WidgetAction action) {
+        if (action.getSource() == flip)
+            controller.flip();
     }
 }

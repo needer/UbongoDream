@@ -11,6 +11,9 @@ import com.example.UbonGo.serverManager.ClientCom;
 import com.example.UbonGo.view.GameView;
 import com.example.UbonGo.view.View;
 
+import java.util.ArrayList;
+import java.util.Stack;
+
 import sheep.game.State;
 
 /**
@@ -20,18 +23,21 @@ public class GameController extends State {
     Main main;
     View view;
     GameModel gameModel;
+    Stack<GameModel> saveStates;
+    GamePiece lastSelectedPiece;
     GamePiece selectedPiece;
     Pair<Float, Float> startPosition;
     Long downPressedTime;
     float scale;
 
-    public GameController(Main m) // TODO: change this so that networking decides what board is played, or something
+    public GameController(Main m, String board)
     {
         main = m;
         view = new GameView(this);
-        gameModel = new GameModel(""); // TODO: set boardString
+        gameModel = new GameModel(board);
         downPressedTime = System.currentTimeMillis();
         scale =  DisplayElements.getInstance().getHeight() / (DisplayElements.getInstance().getEmptySquare().getWidth() * 8);
+        saveStates = new Stack<>();
     }
 
     public void update(float dt){
@@ -43,6 +49,19 @@ public class GameController extends State {
         ((GameView) view).drawBoard(canvas, gameModel.getBoard(), scale);
         ((GameView) view).drawGamePieces(canvas, gameModel.getBoard(), scale);
         ((GameView) view).drawGhost(canvas, gameModel.getGhostedPiece(), scale);
+    }
+
+    public void flip(){
+        lastSelectedPiece.flipYAxis();
+    }
+
+    public void undo(){
+        // TODO: Use gamemodel.undo
+    }
+
+    private void saveState()
+    {
+        // TODO: Use gamemodel.save
     }
 
     public void touchDown(float x, float y)
@@ -62,7 +81,10 @@ public class GameController extends State {
 
         // Get the targeted piece
         selectedPiece = gameModel.getPiece(Pair.create(relativeX, relativeY));
-        System.out.println("(" + relativeX + ", " + relativeY + ")");
+
+        // Set last selected piece
+        if (selectedPiece != null)
+            lastSelectedPiece = selectedPiece;
 
         // Check if double tap
         if (System.currentTimeMillis() - downPressedTime < 200) // Tap time 200ms
@@ -74,7 +96,6 @@ public class GameController extends State {
 
         // Set ghost
         gameModel.setGhostedPiece(selectedPiece);
-
     }
 
     public void touchMove(float x, float y)
@@ -115,7 +136,7 @@ public class GameController extends State {
 
             System.out.println("Raw: " + (x - widthHalf) + ", " + y);
             System.out.println("Placing at: " + boardX + ", " + boardY);
-            gameModel.movePieceToOn(startPosition, Pair.create(boardX, boardY)); // TODO: Fix this; A probable cause of piece misplacement
+            gameModel.movePieceToOn(startPosition, Pair.create(boardX, boardY));
         }
 
         // Unselect piece
