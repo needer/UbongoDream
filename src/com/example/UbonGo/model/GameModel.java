@@ -5,6 +5,7 @@ import android.util.Pair;
 import com.example.UbonGo.DisplayElements;
 
 import java.util.ArrayList;
+import java.util.Stack;
 
 /**
  * Created by Sindre on 17.03.2016.
@@ -13,10 +14,11 @@ public class GameModel {
 
     private GameBoard board;
     private GamePiece ghostedPiece;
-    private GameBoard savedBoard;
+    private Stack<GameBoard> savedBoards;
 
     public GameModel(String boardData)
     {
+        savedBoards = new Stack<>();
         // TODO: Use board data to generate board.
 
         // TESTING CODE!!!!!!!!!
@@ -63,7 +65,7 @@ public class GameModel {
 
     public void movePieceToOn(Pair<Float, Float> position, Pair<Integer, Integer> boardRelativeCoordinate)
     {
-        savedBoard =  new GameBoard(board);
+        savedBoards.push(new GameBoard(board));
         GamePiece p = getPiece(position);
         if (p != null){
             board.setNewPiecePosition(p, boardRelativeCoordinate);
@@ -72,7 +74,7 @@ public class GameModel {
 
     public void movePieceToOff(Pair<Float, Float> startPosition, Pair<Float, Float> endPosition)
     {
-        savedBoard =  new GameBoard(board);
+        savedBoards.push(new GameBoard(board));
         GamePiece p = getPiece(startPosition);
         System.out.println("(" + startPosition.first + ", " + startPosition.second + ")");
         System.out.println("Got for OffMove: " + p);
@@ -99,7 +101,7 @@ public class GameModel {
 
     public void rotate(Pair<Float, Float> pos)
     {
-        savedBoard =  new GameBoard(board);
+        savedBoards.push(new GameBoard(board));
         GamePiece p = getPiece(pos);
         if (p != null) {
             p.rotate90();
@@ -142,32 +144,14 @@ public class GameModel {
         p.setPosition(positionOffBoardX, positionOffBoardY);
     }
 
-    /**
-     * Flips a with respect to the Y-Axis
-     * @param pos position of the piece to be flipped.
-     */
-    public void flip(Pair<Float, Float> pos)
-    {
-        savedBoard =  new GameBoard(board);
-        GamePiece p = getPiece(pos);
-        if (p != null) {
-            p.flipYAxis();
-            Pair<Integer, Integer> referencePosition = p.getBoardPositionOfReferenceSlot();
-            //if the piece has a reference position on the board, check if the rotated piece has collisions
-            if (referencePosition != null && !board.isPositionFree(p, referencePosition)){
-                setToStartPosition(p);
-            }
-        }
-    }
 
     /**
      * replaces the current board with a saved one, if available.
      */
     public void undo()
     {
-        if (savedBoard != null){
-            board = savedBoard;
-            savedBoard = null;
+        if (!savedBoards.empty()){
+            board = savedBoards.pop();
         }
     }
 

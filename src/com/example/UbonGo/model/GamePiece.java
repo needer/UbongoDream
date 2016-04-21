@@ -14,7 +14,7 @@ public class GamePiece{
     private float x;
     private float y;
     private Pair<Integer, Integer> boardPositionOfReferenceSlot;
-    private ArrayList<Pair<Integer, Integer>> slots; // TODO: Rename if it's weird
+    private ArrayList<Pair<Integer, Integer>> slots;
 
 
 
@@ -79,10 +79,10 @@ public class GamePiece{
             float pieceHeightPercentage = DisplayElements.getInstance().getPieceSquare().getHeight()
                     / DisplayElements.getInstance().getHeight();
 
-            if (newX + slot.first * pieceWidthPercentage < 0.0f
-                    || newY + slot.second * pieceHeightPercentage < 0.0f
-                    || newX + (slot.first + 1) * pieceWidthPercentage > 1.0f
-                    || newY + (slot.second + 1) * pieceHeightPercentage > 1.0f){
+            if (newX + slot.first * pieceWidthPercentage < - pieceWidthPercentage * 0.7f
+                    || newY + slot.second * pieceHeightPercentage < - pieceHeightPercentage * 0.7f
+                    || newX + (slot.first + 1) * pieceWidthPercentage > 1.0f + pieceWidthPercentage * 0.7f
+                    || newY + (slot.second + 1) * pieceHeightPercentage > 1.0f + pieceHeightPercentage * 0.7f){
 
                 return false;
             }

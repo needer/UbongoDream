@@ -21,12 +21,12 @@ public class GameBoard{
 
     public GameBoard(GameBoard boardToCopy){
         this.pieces = new ArrayList<GamePiece>();
-        for (GamePiece piece : pieces){
+        for (GamePiece piece : boardToCopy.pieces){
             pieces.add(new GamePiece(piece));
         }
 
         this.slots = new ArrayList<Pair<Integer, Integer>>();
-        for (Pair<Integer, Integer> slot : slots){
+        for (Pair<Integer, Integer> slot : boardToCopy.slots){
             slots.add(new Pair<Integer, Integer>(slot.first,slot.second));
         }
     }
